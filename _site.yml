@@ -11,5 +11,6 @@ navbar:
       href: map_view.html
     - text: "List of Studies"
       href: list_view.html
+  search: true
 output: distill::distill_article
 theme: theme.css
