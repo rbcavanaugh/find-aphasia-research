@@ -28,7 +28,7 @@ data = clinical_trials %>%
   left_join(noise, by = "OrgFullName") %>%
   mutate(name = gsub("[.]", "", x=name),
          z=1,
-         link=paste0("https://rbcavanaugh.github.io/find-aphasia-research/list_view.html/#",NCTId),
+         link=paste0("https://rbcavanaugh.github.io/find-aphasia-research/list_view.html#",NCTId),
           location = "on site",
           lat = lat*lat_noise,
           lon = lon*lon_noise
