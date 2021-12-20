@@ -1,5 +1,5 @@
 ---
-title: "Aphasia research studies"
+title: "List of aphasia research studies"
 ---
 
 ```{r, echo = F, results = "asis", layout = "l-page"}

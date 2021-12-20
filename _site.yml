@@ -1,5 +1,5 @@
 name: "find-aphasia-research"
-title: "Find Aphasia Research"
+title: "Find Aphasia Research Studies"
 description: |
   Find Aphasia Research
 output_dir: "docs"
@@ -11,6 +11,8 @@ navbar:
       href: map_view.html
     - text: "List of Studies"
       href: list_view.html
-  search: true
+    - text: "About"
+      href: about.html
+  search: false
 output: distill::distill_article
 theme: theme.css

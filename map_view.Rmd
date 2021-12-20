@@ -1,5 +1,6 @@
 ---
-title: "Aphasia Studies in the US"
+title: "Current Research Studies in the US"
+description: "1. Click on a green pin. 2. Click on the study name to get more information."
 ---
 
 ```{r setup, include=FALSE}
@@ -54,7 +55,7 @@ fa_to_png_to_datauri <- function(name, ...) {
 }
 
 # specify colors tu resue in the series/tooltips
-rcol <- "#00640090"
+rcol <- "#006400"
 
 mark_alt <- fa_to_png_to_datauri(name = "map-marker-alt", width = 20 , fill = rcol)
 

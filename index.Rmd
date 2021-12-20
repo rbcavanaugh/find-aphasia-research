@@ -1,25 +1,13 @@
 ---
 title: "Aphasia Research Finder"
-description: |
-  This website is for helping people with aphasia find aphasia research studies
 site: distill::distill_website
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+This will be very aphasia friendly content about using the website! For now...
 
-# Learn more about creating websites with Distill at:
-# https://rstudio.github.io/distill/website.html
-
-# Learn more about publishing to GitHub Pages at:
-# https://rstudio.github.io/distill/publish_website.html#github-pages
-
-```
-
-This will be very aphasia friendly content about the website! For now, here's a picture of some cute puppies.
-
-<img src="images/Willa.jpg" style="width:auto; height:200px">
-
+<div style="font-size:2rem;">
+[***Click here to get started***](map_view.html)
+</div>
 
 <div class="study">
 <h4>A note from the National Library of Medicine</h4>

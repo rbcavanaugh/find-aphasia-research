@@ -1,0 +1,21 @@
+---
+title: "About this Website"
+---
+
+This website was made on a whim. It's not very good yet. 
+
+In the future, I hope that I can reduce the amount of text on the 'list of studies' page.
+
+I'm also hoping that I might be able to get aphasia researchers to send me a youtube link
+with an aphasia-friendly recruiting video that I can embed instead of the text altogether. 
+
+Researchers could also tell me whether or not their study is being done remotely, or if they are reimbursing transportation costs and housing for participants and I could indicate this stuff on the map. 
+
+This website was built with data from the [*clinicaltrials.gov*](https://clinicaltrials.gov/) API to pull studies that included a keyword or condition listing of Aphasia (and other information from clinicaltrials.gov). Then I filtered out studies that included primary progressive aphasia and other dementias (I could be convinced to change that...). Finally, I plotted the location information on a map using {highcharter} in R and learned some javascript to link the pins on the map to the correct section of the 'list of studies' page. The website was built using {distill} in R which is a quick way to generate static websites. 
+
+I tried to include Canada (and international studies in general) but my map building skills are...a work in progress. So it just includes the USA for now.
+
+Probably I should also change the URL. 
+
+Please contact me or file an issue. See here: https://github.com/rbcavanaugh/find-aphasia-research
+
