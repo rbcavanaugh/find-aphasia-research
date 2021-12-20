@@ -12,3 +12,4 @@ navbar:
     - text: "List of Studies"
       href: list_view.html
 output: distill::distill_article
+theme: theme.css

@@ -9,8 +9,6 @@ res = GET("https://clinicaltrials.gov/api/query/study_fields?expr=aphasia+AND+AR
 
 data_list = fromJSON(rawToChar(res$content))
 
-#register_google(key="AIzaSyBhAhndR8Ghki9qb-Wc2DLh82iGFzzAgDo")
-
 data = bind_rows(data_list$StudyFieldsResponse$StudyFields) %>% 
   mutate(Condition = map_chr(Condition, str_c, collapse=" "),
          Keyword = map_chr(Keyword, str_c, collapse=" ")) %>%
