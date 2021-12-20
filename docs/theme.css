@@ -15,7 +15,7 @@
 
 html {
   /*-- Main font sizes --*/
-  --title-size:      35px;
+  --title-size:      24px;
   --body-size:       1.06rem;
   --code-size:       14px;
   --aside-size:      12px;
@@ -45,6 +45,18 @@ d-byline {
 .d-contents {
   --heading-size:    18px;
   --contents-size:   13px;
+}
+
+d-title {
+  padding-top:5rem;
+}
+
+d-title p {
+   font-size: 1rem; 
+}
+
+p {
+  margin-bottom: 0;
 }
 
 /*-- ARTICLE APPENDIX --*/

@@ -3,13 +3,13 @@ title: "Aphasia Research Finder"
 site: distill::distill_website
 ---
 
-This will be very aphasia friendly content about using the website! For now...
-
+<center>
 <div style="font-size:2rem;">
 [***Click here to get started***](map_view.html)
 </div>
+</center>
 
 <div class="study">
-<h4>A note from the National Library of Medicine</h4>
+<h4>A note from the National Library of Medicine (see clinicaltrials.gov)</h4>
 <em>Choosing to participate in a study is an important personal decision. Talk with your doctor and family members or friends about deciding to join a study. To learn more about this study, you or your doctor may contact the study research staff using the contacts provided below. For general information, <a href="https://clinicaltrials.gov/ct2/about-studies/learn">Learn About Clinical Studies.</a></em>
 </div>
