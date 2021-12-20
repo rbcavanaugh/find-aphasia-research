@@ -2,7 +2,7 @@
 title: "List of aphasia research studies"
 ---
 
-```{r, echo = F, results = "asis", layout = "l-page"}
+```{r, echo = F, results = "asis", layout = "l-body-outset"}
 library(htmltools)
 library(flexdashboard)
 library(here)
