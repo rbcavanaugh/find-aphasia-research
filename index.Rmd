@@ -16,7 +16,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```
 
+This will be very aphasia friendly content about the website! For now, here's a picture of some cute puppies.
 
+<img src="images/Willa.jpg" style="width:auto; height:200px">
 
 
 <div class="study">
