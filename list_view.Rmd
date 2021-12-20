@@ -1,0 +1,37 @@
+---
+title: "Aphasia research studies"
+---
+
+```{r, echo = F, results = "asis", layout = "l-body-outset"}
+library(htmltools)
+library(flexdashboard)
+library(here)
+library(tidyverse)
+library(htmltools)
+
+data = read.csv(here("data", "clinical_trials_clean.csv"))%>%
+  select(BriefTitle, Condition, StartDate, NCTId,
+         OrgFullName, BriefSummary, DetailedDescription,
+         Keyword, StudyType, EligibilityCriteria, HealthyVolunteers,
+         MinimumAge, Gender, LocationCity, LocationState, lon, lat) %>%
+  mutate(BriefTitle = gsub("[.]", "", x=BriefTitle))
+
+study <- function(data_in) {
+  name = data_in$BriefTitle[i]
+  id = data_in$NCTId[i]
+  university = data_in$OrgFullName[i]
+    div(
+      class = "study",
+      h3(class = "name", name),
+      div(class = "title", id),
+      div(class = "university", university)
+    )
+}
+
+for(i in 1:length(data)){
+  print(br())
+  #cat("##", data$BriefTitle[i], "\n") # Create second level headings with the names.
+  print(study(data))
+}
+```
+    

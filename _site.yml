@@ -1,0 +1,14 @@
+name: "find-aphasia-research"
+title: "Find Aphasia Research"
+description: |
+  Find Aphasia Research
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "Map"
+      href: map_view.html
+    - text: "List of Studies"
+      href: list_view.html
+output: distill::distill_article
