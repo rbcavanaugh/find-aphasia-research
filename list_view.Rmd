@@ -65,7 +65,8 @@ study <- function(data, i, inclusion=inclusion, exlcusion=exclusion) {
           HTML(knitr::kable(format = "html",
           tibble(Name = contact_name,
                  Phone = contact_phone,
-                 Email = contact_email))
+                 Email = contact_email)) %>%
+            kableExtra::scroll_box(width = "90%", box_css = "border: 0px;")
       )),
       div(class = "summary", HTML(summary)), br(),
       #div(class = "eligibility", HTML(eCriteria))
