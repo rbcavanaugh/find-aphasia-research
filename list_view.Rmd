@@ -10,6 +10,20 @@ library(tidyverse)
 library(htmltools)
 library(knitr)
 
+get_eligibility <- function(criteria, type = "inclusion"){
+  if(type == "inclusion"){
+    n = 1
+  } else {
+    n = 2
+  }
+  split_Criteria = str_split(criteria, pattern = "Exclusion Criteria:")
+  text = str_remove(split_Criteria[[1]][n], "Inclusion Criteria:")
+  text = str_replace_all(text, pattern = "<br><br>", "<br>")
+  text = str_replace_all(text, pattern = "<br>", "<br> - ")
+  text = str_replace(text, pattern = " - $", replacement = "<br>")
+  return(text)
+}
+
 data = readRDS("~/random_rprojects/find-aphasia-research/data/clinical_trials_listcols.rds") %>%
   select(BriefTitle, Condition, NCTId,
          OrgFullName, BriefSummary, DetailedDescription,
@@ -17,14 +31,19 @@ data = readRDS("~/random_rprojects/find-aphasia-research/data/clinical_trials_li
          MinimumAge, Gender, LocationCity, LocationState, ResponsiblePartyInvestigatorFullName,
          CentralContactEMail, CentralContactPhone, CentralContactName) %>%
   mutate(BriefTitle = gsub("[.]", "", x=BriefTitle),
-         EligibilityCriteria = str_replace_all(EligibilityCriteria, "\n", "<br>"))
+         EligibilityCriteria = str_replace_all(EligibilityCriteria, "\n", "<br>"),
+         inclusion = get_eligibility(EligibilityCriteria, type = "inclusion"),
+         exclusion = get_eligibility(EligibilityCriteria, type = "exclusion"))
 
-study <- function(data, i) {
+test = data$EligibilityCriteria[1]
+
+study <- function(data, i, inclusion=inclusion, exlcusion=exclusion) {
   name = data$BriefTitle[i]
   NCT_ID = data$NCTId[i]
   university = unlist(data$OrgFullName[i])
   summary = unlist(data$BriefSummary[i])
-  eCriteria = data$EligibilityCriteria[i]
+  inclusion_text = data$inclusion[i]
+  exlcusion_text = data$exclusion[i]
   cities = paste0(
               tibble(cities = unlist(data$LocationCity[i]), states = unlist(data$LocationState[i])) %>%
               #rowwise() %>%
@@ -49,7 +68,11 @@ study <- function(data, i) {
                  Email = contact_email))
       )),
       div(class = "summary", HTML(summary)), br(),
-      div(class = "eligibility", HTML(eCriteria))
+      #div(class = "eligibility", HTML(eCriteria))
+      tags$b("Inclusion Criteria:"),
+      div(HTML(inclusion_text)),
+      tags$b("Exlcusion Criteria:"),
+      div(HTML(exlcusion_text))
       )
 }
 
