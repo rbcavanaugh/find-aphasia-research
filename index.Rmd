@@ -1,15 +1,18 @@
 ---
-title: "Aphasia Research Finder"
+title: "Welcome to the Aphasia Research Finder!"
+description: "This goal of this website is to make it easier for people with aphasia, their families, clinicians, and researchers to discover US-based aphasia research studies. Studies are sourced from clinicaltrials.gov."
 site: distill::distill_website
 ---
 
+
 <center>
-<div style="font-size:2rem;">
+<div style="font-size:2rem;margin-top:50px;">
 [***Click here to get started***](map_view.html)
 </div>
 </center>
+<br>
 
-<div class="study">
-<h4>A note from the National Library of Medicine (see clinicaltrials.gov)</h4>
+<div class="intro_box">
+<h4>A note from the National Library of Medicine (Source: clinicaltrials.gov)</h4>
 <em>Choosing to participate in a study is an important personal decision. Talk with your doctor and family members or friends about deciding to join a study. To learn more about this study, you or your doctor may contact the study research staff using the contacts provided below. For general information, <a href="https://clinicaltrials.gov/ct2/about-studies/learn">Learn About Clinical Studies.</a></em>
 </div>

@@ -33,11 +33,7 @@ data = clinical_trials %>%
           location = "on site",
           lat = lat*lat_noise,
           lon = lon*lon_noise
-        )#sample(c("online", "on site"), 37, replace = T))
-
-
-
-
+        )
 
 library(rsvg)
 library(fontawesome)
