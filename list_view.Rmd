@@ -48,7 +48,7 @@ study <- function(data, i) {
     )
 }
 
-for(i in 1:length(data)){
+for(i in 1:nrow(data)){
   print(br())
   print(study(data, i = i))
 }
