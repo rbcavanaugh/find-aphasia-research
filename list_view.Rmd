@@ -35,17 +35,17 @@ study <- function(data, i) {
       h3(class = "name", name),
       div(class = "university", paste("Institution:", university)),
       div(class = "pi", paste("Principle Investigator:", pi_name)),
-      div(class = "cities", paste("Location(s):", cities)), br(),
-      div(class = "summary", HTML(summary)), br(),
-      div(class = "eligibility", HTML(eCriteria)),
-      div(class = "contact_header", "Contact:", style = "font-size:1.2rem;margin-top:10px;margin-bottom:10px;"),
+      div(class = "cities", paste("Location(s):", cities)), 
+      div(class = "contact_header", "Contact:", style = "font-size:1.1rem;margin-top:5px;margin-bottom:5px;"),
       div(class = "contact",
           HTML(knitr::kable(format = "html",
           tibble(Name = contact_name,
                  Phone = contact_phone,
                  Email = contact_email))
-      ))
-    )
+      )),
+      div(class = "summary", HTML(summary)), br(),
+      div(class = "eligibility", HTML(eCriteria))
+      )
 }
 
 for(i in 1:nrow(data)){
