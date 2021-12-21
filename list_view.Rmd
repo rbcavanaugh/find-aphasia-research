@@ -25,7 +25,12 @@ study <- function(data, i) {
   university = unlist(data$OrgFullName[i])
   summary = unlist(data$BriefSummary[i])
   eCriteria = data$EligibilityCriteria[i]
-  cities = paste0(unlist(data$LocationCity[i]), collapse = ", ")
+  cities = paste0(
+              tibble(cities = unlist(data$LocationCity[i]), states = unlist(data$LocationState[i])) %>%
+              #rowwise() %>%
+              mutate(location = paste(cities, states, sep = ", ")) %>%
+              pull(location), collapse = "; "
+    )
   pi_name = unlist(data$ResponsiblePartyInvestigatorFullName[i])
   contact_name = unlist(data$CentralContactName[i])
   contact_phone = unlist(data$CentralContactPhone[i])
