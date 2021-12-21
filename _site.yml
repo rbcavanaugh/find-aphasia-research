@@ -4,6 +4,7 @@ description: |
   Find Aphasia Research
 output_dir: "docs"
 navbar:
+  search: false
   right:
     - text: "Home"
       href: index.html
@@ -13,6 +14,7 @@ navbar:
       href: list_view.html
     - text: "About"
       href: about.html
-  search: false
+repository_url: https://github.com/rbcavanaugh/find-aphasia-research
+creative_commons: CC BY-NC
 output: distill::distill_article
 theme: theme.css
