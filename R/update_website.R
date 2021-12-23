@@ -16,4 +16,4 @@ library(gert)
 
 git_add(".")
 git_commit("weekly update")
-git_push()
+git_push(remote = "origin", repo = ".")
