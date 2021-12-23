@@ -566,3 +566,13 @@ List of 3
 
 
 /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS map_view.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output map_view.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/Rtmp7zcPaR/file432b6566c518html --include-in-header /tmp/Rtmp7zcPaR/file432b2bcc1c8ehtml --include-in-header /tmp/Rtmp7zcPaR/file432b3e15deaahtml --include-in-header /tmp/Rtmp7zcPaR/file432bdcd8abehtml --include-before-body /tmp/Rtmp7zcPaR/file432b314fc706html --include-before-body /tmp/Rtmp7zcPaR/file432b6c937434html --include-before-body /tmp/Rtmp7zcPaR/file432b44b2399chtml --include-after-body /tmp/Rtmp7zcPaR/file432b10e45400html --include-after-body /tmp/Rtmp7zcPaR/file432b7e46d4a9html --include-after-body /tmp/Rtmp7zcPaR/file432b5c33e403html --include-in-header /tmp/Rtmp7zcPaR/rmarkdown-str432b52beb03f.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/Rtmp7zcPaR/file432b65252289html 
+
+Output created: docs/index.html
+Warning message:
+In name %in% fa_tbl$name :
+  strings not representable in native encoding will be translated to UTF-8
+Linking to libgit2 v1.3.0, ssh support: YES
+Global config: /Users/robcavanaugh/.gitconfig
+Default user: Rob Cavanaugh <rob.cavanaugh@pitt.edu>
+Error: Program 'git' terminated (timeout reached: 10.00sec)
+Execution halted

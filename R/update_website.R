@@ -13,6 +13,8 @@ Sys.setenv(RSTUDIO_PANDOC="/Applications/RStudio.app/Contents/MacOS/pandoc")
 rmarkdown::render_site(encoding = 'UTF-8')
 
 library(gert)
-credentials::set_github_pat()
 
-system('update website "weekly update"')
+system("cd ~/random_rprojects/find-aphasia-research")
+git_add(".")
+git_commit("weekly update")
+git_push(remote = "origin")
