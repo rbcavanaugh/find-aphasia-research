@@ -15,6 +15,4 @@ rmarkdown::render_site(encoding = 'UTF-8')
 library(gert)
 credentials::set_github_pat()
 
-git_add(".")
-git_commit("weekly update")
-git_push(remote = "origin")
+system('update website "weekly update"')
