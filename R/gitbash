@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd ~/random_rprojects/find-aphasia-research
+
+git add .
+
+git commit -m 'weekly update'
+
+git push origin master

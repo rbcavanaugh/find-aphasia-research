@@ -684,3 +684,8 @@ In name %in% fa_tbl$name :
 Linking to libgit2 v1.3.0, ssh support: YES
 Global config: /Users/robcavanaugh/.gitconfig
 Default user: Rob Cavanaugh <rob.cavanaugh@pitt.edu>
+[master 012bd97] weekly update
+ 8 files changed, 223 insertions(+), 15 deletions(-)
+/Library/Frameworks/R.framework/Versions/4.1/Resources/library/askpass/mac-askpass:494:588: execution error: Google Chrome got an error: User canceled. (-128)
+error: unable to read askpass response from '/Library/Frameworks/R.framework/Versions/4.1/Resources/library/askpass/mac-askpass'
+fatal: could not read Username for 'https://github.com': terminal prompts disabled
