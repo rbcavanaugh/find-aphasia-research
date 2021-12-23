@@ -806,3 +806,108 @@ List of 3
 
 
 /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS map_view.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output map_view.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/Rtmp2TS4AZ/file495c19305d31html --include-in-header /tmp/Rtmp2TS4AZ/file495c29d3effbhtml --include-in-header /tmp/Rtmp2TS4AZ/file495c363648e2html --include-in-header /tmp/Rtmp2TS4AZ/file495c25eb093chtml --include-before-body /tmp/Rtmp2TS4AZ/file495c69ab5596html --include-before-body /tmp/Rtmp2TS4AZ/file495c6f80210chtml --include-before-body /tmp/Rtmp2TS4AZ/file495c44f9d404html --include-after-body /tmp/Rtmp2TS4AZ/file495c6dce75fchtml --include-after-body /tmp/Rtmp2TS4AZ/file495cda42bb6html --include-after-body /tmp/Rtmp2TS4AZ/file495c1531c0b9html --include-in-header /tmp/Rtmp2TS4AZ/rmarkdown-str495c7563bc8d.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/Rtmp2TS4AZ/file495c66f00930html 
+
+Output created: docs/index.html
+Warning message:
+In name %in% fa_tbl$name :
+  strings not representable in native encoding will be translated to UTF-8
+here() starts at /Users/robcavanaugh/random_rprojects/find-aphasia-research
+[1] "/Users/robcavanaugh/random_rprojects/find-aphasia-research"
+-- Attaching packages --------------------------------------- tidyverse 1.3.1 --
+v ggplot2 3.3.5     v purrr   0.3.4
+v tibble  3.1.6     v dplyr   1.0.7
+v tidyr   1.1.4     v stringr 1.4.0
+v readr   2.1.1     v forcats 0.5.1
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter()  masks stats::filter()
+x purrr::flatten() masks jsonlite::flatten()
+x dplyr::lag()     masks stats::lag()
+Usage of the Mapbox APIs is governed by the Mapbox Terms of Service.
+Please visit https://www.mapbox.com/legal/tos/ for more information.
+Warning message:
+In stri_detect_regex(string, pattern, negate = negate, opts_regex = opts(pattern)) :
+  argument is not an atomic vector; coercing
+
+Rendering: ./LICENSE.md
+/Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS LICENSE.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output LICENSE.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpkD5M5Z/file4b1c287fc3b8html --include-in-header /tmp/RtmpkD5M5Z/file4b1c26ab0f65html --include-in-header /tmp/RtmpkD5M5Z/file4b1c5c0a79cdhtml --include-in-header /tmp/RtmpkD5M5Z/file4b1c33c2b0f0html --include-before-body /tmp/RtmpkD5M5Z/file4b1c32ee771chtml --include-before-body /tmp/RtmpkD5M5Z/file4b1c45cde963html --include-before-body /tmp/RtmpkD5M5Z/file4b1c51958662html --include-after-body /tmp/RtmpkD5M5Z/file4b1c2fa9b5c6html --include-after-body /tmp/RtmpkD5M5Z/file4b1c2edcf29chtml --include-after-body /tmp/RtmpkD5M5Z/file4b1c2bbbf7cdhtml --include-in-header /tmp/RtmpkD5M5Z/rmarkdown-str4b1c4189ca29.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpkD5M5Z/file4b1c3d376b5chtml 
+[WARNING] This document format requires a nonempty <title> element.
+  Defaulting to 'LICENSE' as the title.
+  To specify a title, use 'title' in metadata or --metadata title="...".
+
+Rendering: ./about.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |......................................................................| 100%
+  ordinary text without R code
+
+
+/Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS about.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output about.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpkD5M5Z/file4b1c36744bdfhtml --include-in-header /tmp/RtmpkD5M5Z/file4b1c169846ahtml --include-in-header /tmp/RtmpkD5M5Z/file4b1cd213967html --include-in-header /tmp/RtmpkD5M5Z/file4b1c3f9fedhtml --include-before-body /tmp/RtmpkD5M5Z/file4b1c511c80bbhtml --include-before-body /tmp/RtmpkD5M5Z/file4b1c26479e97html --include-before-body /tmp/RtmpkD5M5Z/file4b1c27fcdf23html --include-after-body /tmp/RtmpkD5M5Z/file4b1c4a9d8757html --include-after-body /tmp/RtmpkD5M5Z/file4b1c2c208706html --include-after-body /tmp/RtmpkD5M5Z/file4b1cb80b18chtml --include-in-header /tmp/RtmpkD5M5Z/rmarkdown-str4b1c2e08643a.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpkD5M5Z/file4b1c28ec3372html 
+
+Rendering: ./index.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |......................................................................| 100%
+  ordinary text without R code
+
+
+/Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS index.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output index.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpkD5M5Z/file4b1c30b2467ehtml --include-in-header /tmp/RtmpkD5M5Z/file4b1c2b25965bhtml --include-in-header /tmp/RtmpkD5M5Z/file4b1c832132chtml --include-in-header /tmp/RtmpkD5M5Z/file4b1cf88b1e8html --include-before-body /tmp/RtmpkD5M5Z/file4b1c5757fe4fhtml --include-before-body /tmp/RtmpkD5M5Z/file4b1c51f92155html --include-before-body /tmp/RtmpkD5M5Z/file4b1c3afb7d7ehtml --include-after-body /tmp/RtmpkD5M5Z/file4b1c54ebf972html --include-after-body /tmp/RtmpkD5M5Z/file4b1c5045d6echtml --include-after-body /tmp/RtmpkD5M5Z/file4b1c19214920html --include-in-header /tmp/RtmpkD5M5Z/rmarkdown-str4b1c5847e0c3.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpkD5M5Z/file4b1c56f54f7chtml 
+
+Rendering: ./list_view.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |..............                                                        |  20%
+  ordinary text without R code
+
+  |                                                                              |............................                                          |  40%
+label: unnamed-chunk-1 (with options) 
+List of 3
+ $ echo   : logi FALSE
+ $ results: chr "asis"
+ $ layout : chr "l-body-outset"
+
+  |                                                                              |..........................................                            |  60%
+  ordinary text without R code
+
+  |                                                                              |........................................................              |  80%
+label: unnamed-chunk-2 (with options) 
+List of 2
+ $ eval   : logi FALSE
+ $ include: logi FALSE
+
+  |                                                                              |......................................................................| 100%
+  ordinary text without R code
+
+
+/Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS list_view.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output list_view.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpkD5M5Z/file4b1c219198achtml --include-in-header /tmp/RtmpkD5M5Z/file4b1c6424a419html --include-in-header /tmp/RtmpkD5M5Z/file4b1c5dbe556bhtml --include-in-header /tmp/RtmpkD5M5Z/file4b1c7ada13e1html --include-before-body /tmp/RtmpkD5M5Z/file4b1c34f57cahtml --include-before-body /tmp/RtmpkD5M5Z/file4b1c4e0c9078html --include-before-body /tmp/RtmpkD5M5Z/file4b1c1ae0de50html --include-after-body /tmp/RtmpkD5M5Z/file4b1c212363f9html --include-after-body /tmp/RtmpkD5M5Z/file4b1c1a78816ehtml --include-after-body /tmp/RtmpkD5M5Z/file4b1c5d796a55html --include-in-header /tmp/RtmpkD5M5Z/rmarkdown-str4b1c4e342264.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpkD5M5Z/file4b1c40bdfb58html 
+
+Rendering: ./map_view.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |..........                                                            |  14%
+  ordinary text without R code
+
+  |                                                                              |....................                                                  |  29%
+label: setup (with options) 
+List of 1
+ $ include: logi FALSE
+
+  |                                                                              |..............................                                        |  43%
+  ordinary text without R code
+
+  |                                                                              |........................................                              |  57%
+label: unnamed-chunk-1 (with options) 
+List of 1
+ $ include: logi FALSE
+
+trying URL 'https://code.highcharts.com/mapdata/countries/us/us-all.js'
+Content type 'text/javascript' length 66924 bytes (65 KB)
+==================================================
+downloaded 65 KB
+
+  |                                                                              |..................................................                    |  71%
+  ordinary text without R code
+
+  |                                                                              |............................................................          |  86%
+label: unnamed-chunk-2 (with options) 
+List of 3
+ $ echo      : logi FALSE
+ $ layout    : chr "l-page"
+ $ fig.height: num 6
+
+  |                                                                              |......................................................................| 100%
+  ordinary text without R code
+
+
+/Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS map_view.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output map_view.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpkD5M5Z/file4b1c163de061html --include-in-header /tmp/RtmpkD5M5Z/file4b1c486da44dhtml --include-in-header /tmp/RtmpkD5M5Z/file4b1c38560bafhtml --include-in-header /tmp/RtmpkD5M5Z/file4b1c19192b0ehtml --include-before-body /tmp/RtmpkD5M5Z/file4b1c4359b101html --include-before-body /tmp/RtmpkD5M5Z/file4b1c3573db32html --include-before-body /tmp/RtmpkD5M5Z/file4b1c493bcb08html --include-after-body /tmp/RtmpkD5M5Z/file4b1c748e9fc7html --include-after-body /tmp/RtmpkD5M5Z/file4b1c3f9bfd99html --include-after-body /tmp/RtmpkD5M5Z/file4b1c1a26686fhtml --include-in-header /tmp/RtmpkD5M5Z/rmarkdown-str4b1c4f925cd2.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpkD5M5Z/file4b1c120c07cehtml 
