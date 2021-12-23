@@ -92,18 +92,16 @@ map_plot =
           let clusterPointsAmount = this.point.clusterPointsAmount,
             clusterNameAll = [];
           this.point.clusteredData.forEach(p => {
-            clusterNameAll.push('<br>' +
+            clusterNameAll.push(
+        '<br>' +
         '<a href=' + p.options.link + '>' + p.options.name + '</a><br>' +
-        '- ' + p.options.OrgFullName + '<br>');
+        '- <a href=' + p.options.link + '>' + p.options.OrgFullName + '</a><br>'
+        );
           })
           return clusterNameAll;
         }
-        return '<a href='+
-                this.point.link+
-                '>'+
-                this.point.name+
-                '</a><br>' +
-        '- ' + this.point.OrgFullName + '<br>';
+        return '<a href='+ this.point.link + '>' + this.point.name + '</a><br>' +
+                '- <a href='+ this.point.link + '>' + this.point.OrgFullName + '</a><br>';
       }")
   ) %>%
    hc_mapNavigation(enabled = TRUE) %>%
