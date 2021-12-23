@@ -1,1 +1,8 @@
 /bin/sh: robcavanaugh: command not found
+[master 1f69cc1] weekly update
+ 9 files changed, 287 insertions(+), 21 deletions(-)
+ create mode 100644 R/githash.log
+ create mode 100755 docs/R/gitbash
+To https://github.com/rbcavanaugh/find-aphasia-research.git
+   35a2106..1f69cc1  master -> master
+gitbash script run
