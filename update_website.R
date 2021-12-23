@@ -1,8 +1,4 @@
-setwd("~/random_rprojects/find-aphasia-research")
-
 library(here)
-
-here()
 
 source(here("R", "get_data.R"))
 

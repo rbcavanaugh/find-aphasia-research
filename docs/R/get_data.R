@@ -2,7 +2,6 @@
 library(httr)
 library(jsonlite)
 library(tidyverse)
-library(ggmap)
 library(here)
 
 res = GET("https://clinicaltrials.gov/api/query/study_fields?expr=aphasia+AND+AREA%5BOverallStatus%5DRecruiting&fields=BriefTitle%2C+Condition%2C+StartDate%2C+NCTId%2C+OrgFullName%2C+OverallStatus%2C+BriefSummary%2C+DetailedDescription%2C+Keyword%2C+StudyType%2C+EligibilityCriteria%2C+HealthyVolunteers%2C+MinimumAge%2C+Gender%2C+LocationCity%2C+LocationZip%2C+LocationState%2C+ResponsiblePartyInvestigatorFullName%2C+LocationCountry&min_rnk=1&max_rnk=500&fmt=json")
