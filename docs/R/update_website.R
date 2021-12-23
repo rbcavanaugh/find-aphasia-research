@@ -8,6 +8,10 @@ source(here("R", "get_data.R"))
 
 Sys.sleep(5)
 
+library(rmarkdown)
+library(knitr)
+library(distill)
+
 rmarkdown::render_site(encoding = 'UTF-8')
 
 library(gert)
