@@ -65,12 +65,8 @@ d-appendix {
   --heading-color:   rgba(0, 0, 0, 0.65);
   --text-size:       0.8em;
   --text-color:      rgba(0, 0, 0, 0.5);
-  margin-top: 5px;
-  padding-top:30px;
-}
-
-d-article{
-  padding-bottom:20px;
+  /*margin-top: 5px;
+  padding-top:30px;*/
 }
 
 /*-- WEBSITE HEADER + FOOTER --*/
@@ -114,4 +110,126 @@ d-article{
   line-height: 1.1rem;
 }
 
+.modalDialog {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+}
 
+.modalDialog:target {
+	opacity:1;
+	pointer-events: auto;
+}
+
+.modalDialog > div {
+	width: 60vw;
+	position: relative;
+	margin: 10% auto;
+	padding: 5px 20px 13px 20px;
+	border-radius: 5px;
+	background: #fff;
+}
+
+.close {
+	background: #fff;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	float: right;
+	right: 10px;
+	text-align: right;
+	top: 12px;
+	width: 24px;
+	text-decoration: none;
+	border-bottom: none;
+	color: black!important;
+	/*font-weight: bold;*/
+	/*-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;*/
+}
+
+.close:hover { border-bottom:none!important; }
+
+.copy-button {
+  width:200px;
+  font-size:1.2rem;
+  margin-left:auto;
+  cursor: pointer;
+}
+
+d-appendix a {
+  color: #004276!important;
+}
+d-article a {
+  color: #004276!important;
+}
+
+.help-me {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  border-color: #ccc;
+  background-color: #cccccc40;
+  padding: 2%;
+  margin: 2%;
+}
+.help-me:hover {
+  background-color: #cccccc90;
+}
+
+.btn{
+    display: inline-block;
+    width: 280px;
+    padding: 2%;
+    height: 10vh;
+    margin: 10px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 5vh;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.btn:hover{
+  background:#cccccc50;
+}
+
+.cols {
+  display: flex;
+  align-items: center;
+  justify-content:center;
+}
+
+@media (max-width: 1000px) {
+  .cols {
+    flex-direction: column;
+  }
+}
