@@ -151,7 +151,7 @@ study <- function(data, contact, location, i, ...) {
           )),
       div(style="text-align:center;margin-bottom:5px;",
           HTML(
-          glue::glue('<a href="#{NCT_ID}-modal" class="help-me">Help me write an email to {contact_names}</a>')
+          glue::glue('<a href="#{NCT_ID}-modal" class="help-me">Help me write an email</a>')
         )
       ),
       tags$div(
