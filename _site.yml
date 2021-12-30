@@ -22,3 +22,4 @@ repository_url: https://github.com/rbcavanaugh/find-aphasia-research
 creative_commons: CC BY-NC
 output: distill::distill_article
 theme: theme.css
+exclude: ['./README.md']
