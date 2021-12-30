@@ -54,13 +54,15 @@ location_dat = readRDS("~/random_rprojects/find-aphasia-research/data/location.r
 
 ```{r}
 
-get_template <- function(name, div_id){
+get_template <- function(name, div_id, email, close_id){
   
 js_function = paste0("copyDivToClipboard('",div_id,"')")
   
 glue::glue(
   '<div>
-  <a href="#close" title="Close" class="close material-icons">&#xe5c9</a>
+  <a href="#{close_id}" title="Close" class="close material-icons">&#xe5c9</a>
+  <h3> Copy these email(s) into your email:</h3>
+  <p>{email}</p>
   <h3>Copy this email template into your email:</h3>
   <div id="{div_id}">
   Dear {name},<br><br>
@@ -122,12 +124,16 @@ study <- function(data, contact, location, i, ...) {
            ) %>%
     pivot_longer(cols = 2:3, names_to = "type", values_to = "value")
   contact_names = paste(sapply(strsplit(unique(contact_table$Name), ","),"[[",1), collapse = " and ")
+  contact_emails = paste(contact_table[which(contact_table$type=="Email:"),3]$value, collapse = ", ")
   index_table = as_tibble(count(contact_table, Name) %>% t(), row.names = F, .name_repair = "minimal") %>% janitor::row_to_names(row_number = 1)
   contact_kbl = contact_table %>%
     select(-Name) %>%
     kable(col.names = NULL, format = "html") %>%
     pack_rows(index = index_table, indent = F, bold = F)
-  email_template = get_template(name=contact_names, div_id=paste0("emailID", i))
+  email_template = get_template(name=contact_names,
+                                div_id=paste0("emailID", i),
+                                email = contact_emails,
+                                close_id = NCT_ID)
 
   
     div(id=NCT_ID,
