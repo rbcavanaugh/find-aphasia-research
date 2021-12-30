@@ -1,0 +1,42 @@
+---
+title: "Email Template for contacting researchers"
+---
+
+```{js echo = F}
+function copyDivToClipboard() {
+                    var range = document.createRange();
+                    range.selectNode(document.getElementById("id1"));
+                    window.getSelection().removeAllRanges(); // clear current selection
+                    window.getSelection().addRange(range); // to select text
+                    document.execCommand("copy");
+                    window.getSelection().removeAllRanges();// to deselect
+                }
+```
+
+<div class="study" id="id1">
+
+Dear Researcher,
+ 
+I found your research on the Aphasia Research Website (find-aphasia-research.org). 
+ 
+I have aphasia. I think I may meet the study criteria. 
+ 
+The best way to contact me is:
+ 
+Caregiver: **[Insert your phone / email]**
+
+Person with aphasia: **[Insert your phone / email]**
+ 
+Thank you for doing this research.
+ 
+Sincerely,
+ 
+**[Insert your name]**
+
+</div>
+
+<div style="text-align:center;">
+<button onclick="copyDivToClipboard()" style = "width:250px;font-size:1.5rem;margin-left:auto;">Copy Email Template</button>
+</div>
+<br>
+*Thanks to Carol Dow-Richards for this great idea*

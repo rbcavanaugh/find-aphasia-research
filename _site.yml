@@ -8,9 +8,13 @@ navbar:
   right:
     - text: "Home"
       href: index.html
-    - text: "Map"
-      href: map_view.html
-    - text: "List of Studies"
+    - text: "Maps"
+      menu:
+        - text: "US and Canada"
+          href: us-canada-map.html
+        - text: "UK and Europe"
+          href: uk-europe-map.html
+    - text: "Study Details"
       href: list_view.html
     - text: "About"
       href: about.html

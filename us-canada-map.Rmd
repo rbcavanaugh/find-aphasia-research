@@ -1,0 +1,65 @@
+---
+title: "Current Aphasia Research Studies"
+---
+
+```{css, echo = F}
+/* Don't display the title on the map page so there's more map*/
+d-title, d-byline {
+  display: none
+}
+
+d-appendix{
+  display: none !important;
+}
+
+/*Fix for Marker Clusters*/
+.marker-cluster {
+  background-color: #31882A20 !important;
+}
+
+.marker-cluster div {
+  background-color: #31882A !important;
+  color: #fff !important;
+}
+
+d-article{
+  margin-top: 45px;
+  max-height: 90vh !important;
+  padding-top: 0px;
+}
+
+```
+
+```{r setup, include=FALSE}
+library(here)
+library(tidyverse)
+library(leaflet)
+
+clinical_trials = read.csv(here("data", "clinical_trials_clean.csv"))
+
+data = clinical_trials %>%
+  ungroup() %>%
+  select(name = BriefTitle, Condition, StartDate, NCTId,
+         OrgFullName, BriefSummary, DetailedDescription,
+         Keyword, StudyType, EligibilityCriteria, HealthyVolunteers,
+         MinimumAge, Gender, LocationCity, LocationState, lon, lat) %>%
+  mutate(name = gsub("[.]", "", x=name),
+         link=paste0("list_view.html#",NCTId),
+         Name = paste0("<a href=", link, ">", name, "</a>")
+         )
+
+```
+
+```{r echo = F, layout = "l-screen-inset shaded", out.height = "88vh"}
+data %>%
+  rename(lng = lon) %>%
+  leaflet() %>%
+  setView(lng = -95, lat = 40, zoom = 4) %>% 
+  addTiles() %>%
+  addMarkers(popup = ~Name,
+             clusterOptions = markerClusterOptions(
+                               maxClusterRadius = 40,
+                               showCoverageOnHover = F)
+             )
+```
+

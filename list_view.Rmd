@@ -2,146 +2,203 @@
 title: "List of aphasia research studies in the US"
 ---
 
-```{r, echo = F, results = "asis", layout = "l-body-outset"}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      
+```{css echo = F}
+d-article{
+  padding-bottom:20px;
+  padding-top: 20px;
+}
+table td{ 
+  word-break: break-all;
+}
+
+d-article li {
+    margin-bottom: 0em;
+}
+
+d-article li:last-child {
+    margin-bottom: 0.2em;
+}
+
+```
+
+```{js echo = F}
+function copyDivToClipboard(param1) {
+                   var range = document.createRange();
+                   range.selectNode(document.getElementById(param1));
+                   window.getSelection().removeAllRanges(); // clear current selection
+                   window.getSelection().addRange(range); // to select text
+                   document.execCommand("copy");
+                   window.getSelection().removeAllRanges();// to deselect
+                }
+```
+
+```{r, echo = F, eval = T, message = F, warning = F}
+
+knitr::opts_chunk$set(echo = FALSE)
+
 library(htmltools)
 library(flexdashboard)
 library(here)
 library(tidyverse)
 library(htmltools)
 library(knitr)
+library(kableExtra)
 
+study_info = readRDS("~/random_rprojects/find-aphasia-research/data/study_info.rds")
+contact_dat = readRDS("~/random_rprojects/find-aphasia-research/data/contact.rds")
+location_dat = readRDS("~/random_rprojects/find-aphasia-research/data/location.rds")
+
+```
+
+```{r}
+
+get_template <- function(name, div_id){
+  
+js_function = paste0("copyDivToClipboard('",div_id,"')")
+  
+glue::glue(
+  '<div>
+  <a href="#close" title="Close" class="close material-icons">&#xe5c9</a>
+  <h3>Copy this email template into your email:</h3>
+  <div id="{div_id}">
+  Dear {name},<br><br>
+  I found your research on find-aphasia-research.org. <br>
+  I have aphasia and I\'m interested in learning more about the study. I think I may meet the study criteria. <br>
+  The best way to contact me is:<br>
+  &nbsp;&nbsp;Caregiver: <b>[Insert your phone / email]</b><br>
+  &nbsp;&nbsp;Person with aphasia: <b>[Insert your phone / email]</b><br>
+  Thank you for doing this research.<br><br>
+  Sincerely,<br>
+  <b>[Insert your name]</b><br><br>
+  </div>
+  
+  <div style="text-align:center;">
+  <button onclick={js_function} class = "copy-button">Copy Email Template</button>
+  </div></div>
+'
+)
+}
+
+```
+
+
+```{r warning = F, message = F}
 get_eligibility <- function(criteria, type = "inclusion"){
   if(type == "inclusion"){
     n = 1
   } else {
     n = 2
   }
-  split_Criteria = str_split(criteria, pattern = "Exclusion Criteria:")
-  text = str_remove(split_Criteria[[1]][n], "Inclusion Criteria:")
+  split_Criteria = str_split(criteria, pattern = regex("Exclusion Criteria", ignore_case = T))
+  text = str_remove(split_Criteria[[1]][n], pattern = regex("Inclusion Criteria", ignore_case = T))
+  text = str_remove(text, ":")
   text = str_replace_all(text, pattern = "<br><br>", "<br>")
-  text = str_replace_all(text, pattern = "<br>", "<br> - ")
+  text = str_replace_all(text, pattern = "<br>", "<li>")
   text = str_replace(text, pattern = " - $", replacement = "<br>")
+  text = str_replace(text, "<li>$", "<br>")
+  text = str_replace(text, " [.] ", " ")
   return(text)
 }
 
-data = readRDS("~/random_rprojects/find-aphasia-research/data/clinical_trials_listcols.rds") %>%
-  select(BriefTitle, Condition, NCTId,
-         OrgFullName, BriefSummary, DetailedDescription,
-         Keyword, StudyType, EligibilityCriteria, HealthyVolunteers,
-         MinimumAge, Gender, LocationCity, LocationState, ResponsiblePartyInvestigatorFullName,
-         CentralContactEMail, CentralContactPhone, CentralContactName) %>%
-  mutate(BriefTitle = gsub("[.]", "", x=BriefTitle),
-         EligibilityCriteria = str_replace_all(EligibilityCriteria, "\n", "<br>"),
-         inclusion = get_eligibility(EligibilityCriteria, type = "inclusion"),
-         exclusion = get_eligibility(EligibilityCriteria, type = "exclusion"))
-
-test = data$EligibilityCriteria[1]
-
-study <- function(data, i, inclusion=inclusion, exlcusion=exclusion) {
+study <- function(data, contact, location, i, ...) {
   name = data$BriefTitle[i]
   NCT_ID = data$NCTId[i]
   university = unlist(data$OrgFullName[i])
   summary = unlist(data$BriefSummary[i])
   inclusion_text = data$inclusion[i]
   exlcusion_text = data$exclusion[i]
-  cities = paste0(
-              tibble(cities = unlist(data$LocationCity[i]), states = unlist(data$LocationState[i])) %>%
-              #rowwise() %>%
-              mutate(location = paste(cities, states, sep = ", ")) %>%
-              pull(location), collapse = "; "
-    )
+  cities = location[location$NCTId==NCT_ID,]$cities
+  country = location[location$NCTId==NCT_ID,]$countries
   pi_name = unlist(data$ResponsiblePartyInvestigatorFullName[i])
-  contact_name = unlist(data$CentralContactName[i])
-  contact_phone = unlist(data$CentralContactPhone[i])
-  contact_email = unlist(data$CentralContactEMail[i])
+  contact_table = contact %>%
+    filter(NCTId == NCT_ID) %>%
+    select(
+           Name = CentralContactName,
+           `Phone:` = CentralContactPhone,
+           `Email:` = CentralContactEMail,
+           -NCTId
+           ) %>%
+    pivot_longer(cols = 2:3, names_to = "type", values_to = "value")
+  contact_names = paste(sapply(strsplit(unique(contact_table$Name), ","),"[[",1), collapse = " and ")
+  index_table = as_tibble(count(contact_table, Name) %>% t(), row.names = F, .name_repair = "minimal") %>% janitor::row_to_names(row_number = 1)
+  contact_kbl = contact_table %>%
+    select(-Name) %>%
+    kable(col.names = NULL, format = "html") %>%
+    pack_rows(index = index_table, indent = F, bold = F)
+  email_template = get_template(name=contact_names, div_id=paste0("emailID", i))
+
+  
     div(id=NCT_ID,
       class = "study",
       h3(class = "name", name),
-      div(class = "university", paste("Institution:", university)),
       div(class = "pi", paste("Principle Investigator:", pi_name)),
-      div(class = "cities", paste("Location(s):", cities)), 
-      div(class = "contact_header", "Contact:", style = "font-size:1.1rem;margin-top:5px;margin-bottom:5px;"),
-      div(class = "contact",
-          HTML(knitr::kable(format = "html",
-          tibble(Name = contact_name,
-                 Phone = contact_phone,
-                 Email = contact_email)) %>%
-            kableExtra::scroll_box(width = "90%", box_css = "border: 0px;")
-      )),
+      div(class = "university", paste("Institution:", university)),
+      div(class = "countries", paste("Country:", country)), 
+      div(class = "cities", paste("City:", cities)), br(),
+      tags$b("Brief Description:"),
       div(class = "summary", HTML(summary)), br(),
       #div(class = "eligibility", HTML(eCriteria))
       tags$b("Inclusion Criteria:"),
       div(HTML(inclusion_text)),
       tags$b("Exlcusion Criteria:"),
-      div(HTML(exlcusion_text))
+      div(HTML(exlcusion_text)), br(),
+      tags$b("Contact Information:"),
+      div(class = "contact",
+          HTML(
+            contact_kbl
+          )),
+      div(style="text-align:center;margin-bottom:5px;",
+          HTML(
+          glue::glue('<a href="#{NCT_ID}-modal" class="help-me">Help me write an email to {contact_names}</a>')
+        )
+      ),
+      tags$div(
+        cat(knitr::asis_output(htmltools::htmlPreserve(
+          glue::glue(
+            '<div id="{NCT_ID}-modal" class="modalDialog">
+                  {email_template}
+            </div>'
+        )))
       )
+      )
+    )
 }
+
+
+```
+    
+```{r}
+data = study_info %>%
+  select(BriefTitle, Condition, NCTId,
+         OrgFullName, BriefSummary, DetailedDescription,
+         Keyword, StudyType, EligibilityCriteria, HealthyVolunteers,
+         MinimumAge, Gender, ResponsiblePartyInvestigatorFullName) %>%
+  mutate(BriefTitle = gsub("[.]", "", x=BriefTitle)) %>%
+  rowwise() %>%
+  mutate(
+    EligibilityCriteria= str_replace_all(EligibilityCriteria, ">", "&gt;"),
+    EligibilityCriteria= str_replace_all(EligibilityCriteria, "<", "&lt;"),
+    EligibilityCriteria = str_replace_all(EligibilityCriteria, "\n", "<br>"),
+         inclusion = get_eligibility(EligibilityCriteria, type = "inclusion"),
+         exclusion = get_eligibility(EligibilityCriteria, type = "exclusion")
+         )
+```
+
+```{r, results = "asis", layout = "l-body-outset"}
 
 for(i in 1:nrow(data)){
   print(br())
-  print(study(data, i = i))
+  print(study(data,
+              contact = contact_dat,
+              location = location_dat,
+              i = i))
+  
 }
 ```
-    
-    
-    
-    
-    
-```{r, eval = F, include = F}
-library(bsplus)
-library(htmltools)
-library(flexdashboard)
-library(here)
-library(tidyverse)
-library(htmltools)
 
-data = readRDS("~/random_rprojects/find-aphasia-research/data/clinical_trials_listcols.rds") %>%
-  select(BriefTitle, Condition, StartDate, NCTId,
-         OrgFullName, BriefSummary, DetailedDescription,
-         Keyword, StudyType, EligibilityCriteria, HealthyVolunteers,
-         MinimumAge, Gender, LocationCity, LocationState, ResponsiblePartyInvestigatorFullName) %>%
-  mutate(BriefTitle = gsub("[.]", "", x=BriefTitle),
-         EligibilityCriteria = str_replace_all(EligibilityCriteria, "\n", "<br>"))
 
-data_list = purrr::transpose(data)
 
-new_list = list()
-
-for(i in 1:nrow(data)){
-  university = unlist(data$OrgFullName[i])
-  summary = unlist(data$BriefSummary[i])
-  eCriteria = data$EligibilityCriteria[i]
-  cities = paste0(unlist(data$LocationCity[2]), collapse = ", ")
-  pi_name = unlist(data$ResponsiblePartyInvestigatorFullName[i])
-  
-  content=  div(
-      #class = "study",
-      #h3(class = "name", name),
-      div(class = "university", paste("Institution:", university)),
-      div(class = "pi", paste("Principle Investigator:", pi_name)),
-      div(class = "cities", paste("Location(s):", cities)), br(),
-      div(class = "summary", HTML(summary)), br(),
-      div(class = "eligibility", HTML(eCriteria))
-    )
-  
-  new_list[[i]]=content
-  
-}
-    
-fn_append <- function(tag, title, content_tag) {
-  bsplus::bs_append(
-    tag,
-    title = title,
-    content = content_tag
-  )
-}
-
-reduce2(
-    data$BriefTitle,
-    new_list,
-    fn_append,
-    .init = bs_accordion(id = "test2")
-  )
-```
     
     
