@@ -64,7 +64,7 @@ glue::glue(
   <h3>Copy this email template into your email:</h3>
   <div id="{div_id}">
   Dear {name},<br><br>
-  I found your research on find-aphasia-research.org. <br>
+  I found your research on aphasiaresearch.org. <br>
   I have aphasia and I\'m interested in learning more about the study. I think I may meet the study criteria. <br>
   The best way to contact me is:<br>
   &nbsp;&nbsp;Caregiver: <b>[Insert your phone / email]</b><br>
