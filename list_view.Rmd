@@ -1,5 +1,5 @@
 ---
-title: "List of aphasia research studies in the US"
+title: "Aphasia research studies registered at clinicaltrials.gov"
 ---
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
