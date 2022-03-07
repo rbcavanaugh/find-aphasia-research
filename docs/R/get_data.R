@@ -5,8 +5,12 @@ library(tidyverse)
 library(here)
 library(mapboxapi)
 
-res = GET("https://clinicaltrials.gov/api/query/study_fields?expr=aphasia+AND+AREA%5BOverallStatus%5DRecruiting&fields=BriefTitle%2C+Condition%2C+StartDate%2C+NCTId%2C+OrgFullName%2C+OverallStatus%2C+BriefSummary%2C+DetailedDescription%2C+Keyword%2C+StudyType%2C+EligibilityCriteria%2C+HealthyVolunteers%2C+MinimumAge%2C+Gender%2C+LocationCity%2C+LocationZip%2C+LocationState%2C+ResponsiblePartyInvestigatorFullName%2C+LocationCountry&min_rnk=1&max_rnk=500&fmt=json")
+# read in manual data
+manual = read_csv(here("data", "manual-submissions.csv")) %>%
+  mutate(clinicaltrialsgov = 0)
 
+
+res = GET("https://clinicaltrials.gov/api/query/study_fields?expr=aphasia+AND+AREA%5BOverallStatus%5DRecruiting&fields=BriefTitle%2C+Condition%2C+StartDate%2C+NCTId%2C+OrgFullName%2C+OverallStatus%2C+BriefSummary%2C+DetailedDescription%2C+Keyword%2C+StudyType%2C+EligibilityCriteria%2C+HealthyVolunteers%2C+MinimumAge%2C+Gender%2C+LocationCity%2C+LocationZip%2C+LocationState%2C+ResponsiblePartyInvestigatorFullName%2C+LocationCountry&min_rnk=1&max_rnk=500&fmt=json")
 
 #source(here("R", "mapbox.R"))
 #mb_access_token(token, install = TRUE)
@@ -24,14 +28,19 @@ data = bind_rows(data_list$StudyFieldsResponse$StudyFields) %>%
   #filter(str_detect(LocationCountry, "United States")) %>%
   unite(remove = F, location, OrgFullName, LocationCity, LocationState, LocationCountry, sep = " ") %>%
   rowwise() %>%
+  mutate(clinicaltrialsgov=1)
+
+add_manual = manual %>%
+  select(NCTId, BriefTitle, location)
+
+data2 = bind_rows(data, add_manual) %>%
   mutate(geo = list(mb_geocode(location)),
-         lon = geo[1],
-         lat = geo[2]) %>%
+                lon = geo[1],
+                lat = geo[2]
+         ) %>%
   select(-geo)
 
-
-
-write.csv(data, file = here("data", "clinical_trials_clean.csv"))
+write.csv(data2, file = here("data", "clinical_trials_clean.csv"))
 
 
 res = GET("https://clinicaltrials.gov/api/query/study_fields?expr=aphasia+AND+AREA%5BOverallStatus%5DRecruiting&fields=BriefTitle%2C+Condition%2C+NCTId%2C+OrgFullName%2C+OverallStatus%2C+BriefSummary%2C+DetailedDescription%2C+Keyword%2C+StudyType%2C+EligibilityCriteria%2C+HealthyVolunteers%2C+MinimumAge%2C+Gender%2C+LocationCity%2C+LocationState%2C+ResponsiblePartyInvestigatorFullName%2C+CentralContactEmail%2C+CentralContactPhone%2C+CentralContactName%2C+LocationCountry&min_rnk=1&max_rnk=500&fmt=json")
@@ -52,6 +61,10 @@ data_listcols = bind_rows(data_list$StudyFieldsResponse$StudyFields) %>%
 contact <- data_listcols %>%
   select(starts_with("Central"), NCTId) %>%
   unnest(everything(),  keep_empty = T)
+
+contact$clinicaltrialsgov = 1
+
+contact <- bind_rows(contact, manual[,"NCTId"])
   
 location <- data_listcols %>%
   select(starts_with("Location"), NCTId) %>%
@@ -60,23 +73,27 @@ location <- data_listcols %>%
   group_by(NCTId) %>%
   summarize(cities = paste(location, collapse = "; "),
             countries = paste(unique(LocationCountry), collapse = ", "))
+location$clinicaltrialsgov = 1
+
+manual_location = manual %>%
+  select(NCTId, cities = location, countries = country, clinicaltrialsgov)
+
+location <- bind_rows(location, manual_location)
 
 study_info <- data_listcols %>%
   select(Rank:Gender, ResponsiblePartyInvestigatorFullName) %>%
   unnest(everything(), keep_empty = T)
 
 study_info[study_info==""] <- NA
+study_info$clinicaltrialsgov = 1
+
+manual_study_info = manual %>%
+  select(BriefTitle, NCTId, ResponsiblePartyInvestigatorFullName = pi, flyer, clinicaltrialsgov)
+
+study_info = bind_rows(study_info, manual_study_info)
+
 
 write_rds(contact, file = here("data", "contact.rds"))
 write_rds(location, file = here("data", "location.rds"))
 write_rds(study_info, file = here("data", "study_info.rds"))
 
-
-# 
-# to_google <- study_info %>%
-#   select(BriefTitle, BriefSummary) %>%
-#   mutate(SpanishSummary= paste0('=GOOGLETRANSLATE(A',row_number()+1, ',"en","es")'))
-# 
-# library(googlesheets4)
-# 
-# sheet_write(to_google, sheet = "scaley-honeybee")

@@ -39,10 +39,7 @@ clinical_trials = read.csv(here("data", "clinical_trials_clean.csv"))
 
 data = clinical_trials %>%
   ungroup() %>%
-  select(name = BriefTitle, Condition, StartDate, NCTId,
-         OrgFullName, BriefSummary, DetailedDescription,
-         Keyword, StudyType, EligibilityCriteria, HealthyVolunteers,
-         MinimumAge, Gender, LocationCity, LocationState, lon, lat) %>%
+  select(name = BriefTitle,NCTId, lon, lat) %>%
   mutate(name = gsub("[.]", "", x=name),
          link=paste0("list_view.html#",NCTId),
          Name = paste0("<a href=", link, ">", name, "</a>")
