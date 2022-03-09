@@ -1,0 +1,55 @@
+---
+title: "Recently added research studies"
+---
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      
+```{css echo = F}
+d-article{
+  padding-bottom:5px;
+  padding-top: 20px;
+}
+
+d-article li {
+    margin-bottom: 0em;
+}
+
+th, td {
+  white-space: nowrap; 
+  }
+```
+
+
+```{r, echo = F, eval = T, message = F, warning = F}
+
+knitr::opts_chunk$set(echo = FALSE)
+
+library(htmltools)
+library(here)
+library(tidyverse)
+library(knitr)
+library(DT)
+library(glue)
+
+data = readRDS("~/random_rprojects/find-aphasia-research/data/data_dt.rds") 
+
+data_prep = data %>%
+  arrange(desc(date)) %>%
+  mutate(
+         link=paste0("list_view.html#",NCTId),
+         Name = paste0("<a href=", link, ">",BriefTitle,"</a>"),
+         date = format(date, format="%B %d, %Y")) %>%
+  select(`Start Date` = date, Name) %>%
+  distinct()
+
+```
+
+
+```{r, layout = "l-body-outset"}
+DT::datatable(data_prep, escape = F, options = list(scrollX=TRUE, pageLength=5), rownames = FALSE)
+```
+
+
+
+    
+    

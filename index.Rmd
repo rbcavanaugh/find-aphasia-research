@@ -1,6 +1,6 @@
 ---
 title: "Welcome to the Aphasia Research Finder!"
-description: "This goal of this website is to make it easier for people with aphasia, their families, clinicians, and researchers to discover aphasia research studies. Source: *clinicaltrials.gov.*"
+description: "This goal of this website is to make it easier for people with aphasia, their families, clinicians, and researchers to discover aphasia research studies."
 site: distill::distill_website
 ---
 

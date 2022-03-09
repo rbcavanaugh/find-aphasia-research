@@ -31,14 +31,16 @@ data = bind_rows(data_list$StudyFieldsResponse$StudyFields) %>%
   mutate(clinicaltrialsgov=1)
 
 add_manual = manual %>%
-  select(NCTId, BriefTitle, location)
+  select(NCTId, BriefTitle, location, ResponsiblePartyInvestigatorFullName, StartDate)
 
 data2 = bind_rows(data, add_manual) %>%
   mutate(geo = list(mb_geocode(location)),
                 lon = geo[1],
-                lat = geo[2]
-         ) %>%
+                lat = geo[2],
+         date=lubridate::mdy(StartDate)) %>%
   select(-geo)
+
+
 
 write.csv(data2, file = here("data", "clinical_trials_clean.csv"))
 
@@ -64,7 +66,7 @@ contact <- data_listcols %>%
 
 contact$clinicaltrialsgov = 1
 
-contact <- bind_rows(contact, manual[,"NCTId"])
+contact <- bind_rows(contact, manual[,c("NCTId", "CentralContactEMail", "CentralContactPhone", "CentralContactName", "clinicaltrialsgov")])
   
 location <- data_listcols %>%
   select(starts_with("Location"), NCTId) %>%
@@ -88,12 +90,16 @@ study_info[study_info==""] <- NA
 study_info$clinicaltrialsgov = 1
 
 manual_study_info = manual %>%
-  select(BriefTitle, NCTId, ResponsiblePartyInvestigatorFullName = pi, flyer, clinicaltrialsgov)
+  select(BriefTitle, NCTId, flyer, clinicaltrialsgov)
 
 study_info = bind_rows(study_info, manual_study_info)
-
 
 write_rds(contact, file = here("data", "contact.rds"))
 write_rds(location, file = here("data", "location.rds"))
 write_rds(study_info, file = here("data", "study_info.rds"))
+
+data_DT = data2 %>%
+  select(BriefTitle, date, ResponsiblePartyInvestigatorFullName, NCTId)
+
+write_rds(data_DT, file = here("data", "data_dt.rds"))
 

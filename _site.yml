@@ -16,6 +16,8 @@ navbar:
           href: uk-europe-map.html
     - text: "Study Details"
       href: list_view.html
+    - text: "Recent Studies"
+      href: recent.html
     - text: "About"
       href: about.html
 repository_url: https://github.com/rbcavanaugh/find-aphasia-research

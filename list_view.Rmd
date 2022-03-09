@@ -1,5 +1,5 @@
 ---
-title: "Aphasia research studies registered at clinicaltrials.gov"
+title: "Aphasia research studies"
 ---
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -108,17 +108,11 @@ study <- function(data, contact, location, i, ...) {
   
   gov = data$clinicaltrialsgov[i]
   
-  if(gov == 1){
-  name = data$BriefTitle[i]
-  NCT_ID = data$NCTId[i]
-  university = unlist(data$OrgFullName[i])
-  summary = unlist(data$BriefSummary[i])
-  inclusion_text = data$inclusion[i]
-  exlcusion_text = data$exclusion[i]
-  cities = location[location$NCTId==NCT_ID,]$cities
-  country = location[location$NCTId==NCT_ID,]$countries
-  pi_name = unlist(data$ResponsiblePartyInvestigatorFullName[i])
-  contact_table = contact %>%
+    name = data$BriefTitle[i]
+    NCT_ID = data$NCTId[i]
+    pi_name = unlist(data$ResponsiblePartyInvestigatorFullName[i])
+
+    contact_table = contact %>%
     filter(NCTId == NCT_ID) %>%
     select(
            Name = CentralContactName,
@@ -127,7 +121,7 @@ study <- function(data, contact, location, i, ...) {
            -NCTId
            ) %>%
     pivot_longer(cols = 2:3, names_to = "type", values_to = "value")
-  
+    
   contact_names = paste(sapply(strsplit(unique(contact_table$Name), ","),"[[",1), collapse = " and ")
   contact_emails = paste(contact_table[which(contact_table$type=="Email:"),3]$value, collapse = ", ")
   index_table = as_tibble(count(contact_table, Name) %>% t(), row.names = F, .name_repair = "minimal") %>%  
@@ -140,6 +134,15 @@ study <- function(data, contact, location, i, ...) {
                                 div_id=paste0("emailID", i),
                                 email = contact_emails,
                                 close_id = NCT_ID)
+  
+  if(gov == 1){
+  
+  university = unlist(data$OrgFullName[i])
+  summary = unlist(data$BriefSummary[i])
+  inclusion_text = data$inclusion[i]
+  exlcusion_text = data$exclusion[i]
+  cities = location[location$NCTId==NCT_ID,]$cities
+  country = location[location$NCTId==NCT_ID,]$countries
 
     divOut = 
       div(id=NCT_ID,
@@ -178,16 +181,32 @@ study <- function(data, contact, location, i, ...) {
     ) 
   } else {
     imgpath=here::here("data", "flyers", data$flyer[i])
-    name = data$BriefTitle[i]
-    NCT_ID = data$NCTId[i]
-    pi_name = unlist(data$ResponsiblePartyInvestigatorFullName[i])
+
     divOut = 
       div(id=NCT_ID,
       class = "study",
       h3(class = "name", name),
-      div(class = "pi", paste("Principle Investigator:", pi_name)),
       tags$img(src = imgpath),
-      tags$em("This study was submitted manually, not through clinicaltrials.gov")
+      tags$b("Contact Information:"),
+      div(class = "contact",
+          HTML(
+            contact_kbl
+          )),
+      div(style="text-align:center;margin-bottom:5px;",
+          HTML(
+          glue::glue('<a href="#{NCT_ID}-modal" class="help-me">Help me write an email</a>')
+        )
+      ),
+      tags$div(
+        cat(knitr::asis_output(htmltools::htmlPreserve(
+          glue::glue(
+            '<div id="{NCT_ID}-modal" class="modalDialog">
+                  {email_template}
+            </div>'
+        )))
+      )
+      ),br(),
+      tags$em("This study was submitted manually, not through clinicaltrials.gov", style="font-size:0.7rem;")
     ) 
     
     
