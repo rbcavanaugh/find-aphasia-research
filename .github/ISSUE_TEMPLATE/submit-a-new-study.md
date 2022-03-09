@@ -1,7 +1,7 @@
 ---
 name: Submit a new study
 about: Select to add your study to the website
-title: 'New Study Submission: [Name of PI]'
+title: 'New Study Submission: [Your name, year of study]'
 labels: ''
 assignees: ''
 
