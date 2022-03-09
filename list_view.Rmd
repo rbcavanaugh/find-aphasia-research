@@ -202,7 +202,7 @@ study <- function(data, contact, location, i, ...) {
       div(class = "university", paste("Institution:", university)),
       div(class = "countries", paste("Country:", country)), 
       div(class = "cities", paste("City:", cities)), br(),
-      tags$a(tags$img(src = imgpath, class = "flyer"), href = imgpath, target = "_blank"),
+      tags$a(tags$img(src = imgpath, class = "flyer"), href = paste0("data/flyers/", data$flyer[i]), target = "_blank"),
       tags$b("Contact Information:"),
       div(class = "contact",
           HTML(
