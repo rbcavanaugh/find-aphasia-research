@@ -13,8 +13,8 @@ assignees: ''
 
 Name of Principal Investigator:
 Name of Study/Project:
-Study start date: 
-Anticipated study end date:
+Study start date (MM/DD/YYYY): 
+Anticipated study end date (MM/DD/YYYY):
 Location (city, state):
 Country:
 Study contact person:
