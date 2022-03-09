@@ -3,7 +3,7 @@
 
 Repository for [aphasiaresearch.org](aphasiaresearch.org). 
 
-Fhis website was built primarily using data from the [*clinicaltrials.gov*](https://clinicaltrials.gov/) API to identify studies that included a keyword or condition listing of Aphasia (excluding primary progressive aphasia and other dementias.) 
+This website was built primarily using data from the [*clinicaltrials.gov*](https://clinicaltrials.gov/) API to identify studies that included a keyword or condition listing of Aphasia (excluding primary progressive aphasia and other dementias.) 
 
 To add your study to this website, [submit the study](https://clinicaltrials.gov/ct2/manage-recs) to *clinicaltrials.gov*. This has [a number of benefits for the research community and general public](https://clinicaltrials.gov/ct2/manage-recs/background). While submission to *clinicaltrials.gov* is required for funded clinical trials in the US, voluntary submission is also permitted for other studies.
 
