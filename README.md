@@ -7,7 +7,7 @@ Fhis website was built primarily using data from the [*clinicaltrials.gov*](http
 
 To add your study to this website, [submit the study](https://clinicaltrials.gov/ct2/manage-recs) to *clinicaltrials.gov*. This has [a number of benefits for the research community and general public](https://clinicaltrials.gov/ct2/manage-recs/background). While submission to *clinicaltrials.gov* is required for funded clinical trials in the US, voluntary submission is also permitted for other studies.
 
-If submitting your study to clinicaltrials.gov is not feasible or is overly burdensome, you can add an IRB-approved flyer to the website by [submitting an issue on github.com]( https://github.com/rbcavanaugh/find-aphasia-research/issues). Note that you will will need to create a github account. This is free and helps me keep track of submissions.
+If submitting your study to clinicaltrials.gov is not feasible or is overly burdensome, you can add an IRB-approved flyer to the website by [submitting a new issue on github.com]( https://github.com/rbcavanaugh/find-aphasia-research/issues). Note that you will will need to create a github account. This is free and helps me keep track of submissions.
 
 If you notice an error on the website, please [contact me](https://robcavanaugh.com) or [file an issue here]( https://github.com/rbcavanaugh/find-aphasia-research/issues). 
 
