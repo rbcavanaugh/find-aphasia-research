@@ -39,7 +39,7 @@ data_prep = data %>%
          link=paste0("list_view.html#",NCTId),
          Name = paste0("<a href=", link, ">",BriefTitle,"</a>"),
          date = format(date, format="%B %d, %Y")) %>%
-  select(`Start Date` = date, Name) %>%
+  select(`Start Date` = date, Institution = OrgFullName, Name) %>%
   distinct()
 
 ```

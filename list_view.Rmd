@@ -144,14 +144,17 @@ study <- function(data, contact, location, i, ...) {
                                 email = contact_emails,
                                 close_id = NCT_ID)
   
+  university = unlist(data$OrgFullName[i])
+  cities = location[location$NCTId==NCT_ID,]$cities
+  country = location[location$NCTId==NCT_ID,]$countries
+  
   if(gov == 1){
   
-  university = unlist(data$OrgFullName[i])
+  
   summary = unlist(data$BriefSummary[i])
   inclusion_text = data$inclusion[i]
   exlcusion_text = data$exclusion[i]
-  cities = location[location$NCTId==NCT_ID,]$cities
-  country = location[location$NCTId==NCT_ID,]$countries
+
 
     divOut = 
       div(id=NCT_ID,
@@ -195,6 +198,10 @@ study <- function(data, contact, location, i, ...) {
       div(id=NCT_ID,
       class = "study",
       h3(class = "name", name),
+      div(class = "pi", paste("Principle Investigator:", pi_name)),
+      div(class = "university", paste("Institution:", university)),
+      div(class = "countries", paste("Country:", country)), 
+      div(class = "cities", paste("City:", cities)), br(),
       tags$a(tags$img(src = imgpath, class = "flyer"), href = imgpath, target = "_blank"),
       tags$b("Contact Information:"),
       div(class = "contact",
