@@ -1,6 +1,6 @@
 ---
 name: Submit a new study
-about: Select to add your study to the website
+about: Select this option to add your study to the website
 title: 'New Study Submission: [Your name, year of study]'
 labels: ''
 assignees: ''
@@ -11,13 +11,17 @@ assignees: ''
 
 2. Fill out the following information
 
+**About the Study**
 Name of Principal Investigator:
 Name of Study/Project:
-Study start date: 
+Study start date (MM/DD/YYYY): 
+Anticipated study end date (MM/DD/YYYY):
 Location (city, state):
 Country:
+Institution:
+IRB record number:
+
+**How you want to be contacted**
 Study contact person:
 Study contact phone:
 Study contact email:
-Institution:
-IRB record number:
