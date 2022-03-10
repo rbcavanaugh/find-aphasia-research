@@ -28,10 +28,11 @@ data = bind_rows(data_list$StudyFieldsResponse$StudyFields) %>%
   #filter(str_detect(LocationCountry, "United States")) %>%
   unite(remove = F, location, OrgFullName, LocationCity, LocationState, LocationCountry, sep = " ") %>%
   rowwise() %>%
-  mutate(clinicaltrialsgov=1)
+  mutate(clinicaltrialsgov=1,
+         Remote = "no")
 
 add_manual = manual %>%
-  select(NCTId, BriefTitle, location, ResponsiblePartyInvestigatorFullName, StartDate, OrgFullName, LocationCity, LocationState)
+  select(NCTId, BriefTitle, location, ResponsiblePartyInvestigatorFullName, StartDate, OrgFullName, LocationCity, LocationState, Remote)
 
 data2 = bind_rows(data, add_manual) %>%
   mutate(geo = list(mb_geocode(location)),
@@ -99,7 +100,7 @@ write_rds(location, file = here("data", "location.rds"))
 write_rds(study_info, file = here("data", "study_info.rds"))
 
 data_DT = data2 %>%
-  select(BriefTitle, date, ResponsiblePartyInvestigatorFullName, NCTId, OrgFullName)
+  select(BriefTitle, date, ResponsiblePartyInvestigatorFullName, NCTId, OrgFullName, Remote)
 
 write_rds(data_DT, file = here("data", "data_dt.rds"))
 

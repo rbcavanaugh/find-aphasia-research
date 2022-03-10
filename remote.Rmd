@@ -1,5 +1,5 @@
 ---
-title: "Recently added research studies"
+title: "Online research studies"
 ---
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -39,6 +39,7 @@ data_prep = data %>%
          link=paste0("list_view.html#",NCTId),
          Name = paste0("<a href=", link, ">",BriefTitle,"</a>"),
          date = format(date, format="%B %d, %Y")) %>%
+  filter(Remote == "Online") %>%
   select(Date = date, Institution = OrgFullName, Name) %>%
   distinct()
 

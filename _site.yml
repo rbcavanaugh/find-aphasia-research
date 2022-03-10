@@ -1,5 +1,5 @@
 name: "find-aphasia-research"
-title: "Find Aphasia Research Studies"
+title: "Aphasia Research Finder"
 description: |
   Find Aphasia Research
 output_dir: "docs"
@@ -14,10 +14,12 @@ navbar:
           href: us-canada-map.html
         - text: "UK and Europe"
           href: uk-europe-map.html
-    - text: "Study Details"
+    - text: "Details"
       href: list_view.html
-    - text: "Recent Studies"
+    - text: "Recently Added"
       href: recent.html
+    - text: "Online Studies"
+      href: remote.html
     - text: "About"
       href: about.html
 repository_url: https://github.com/rbcavanaugh/find-aphasia-research
