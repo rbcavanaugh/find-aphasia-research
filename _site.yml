@@ -14,8 +14,6 @@ navbar:
           href: us-canada-map.html
         - text: "UK and Europe"
           href: uk-europe-map.html
-    - text: "Details"
-      href: list_view.html
     - text: "Recently Added"
       href: recent.html
     - text: "Online Studies"
