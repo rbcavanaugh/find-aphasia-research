@@ -1307,3 +1307,256 @@ List of 3
 /Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS us-canada-map.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output us-canada-map.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpoJxd4E/file69e526cabdchtml --include-in-header /tmp/RtmpoJxd4E/file69e30a3cf06html --include-in-header /tmp/RtmpoJxd4E/file69e5c8722cahtml --include-in-header /tmp/RtmpoJxd4E/file69e2bfd2b3bhtml --include-before-body /tmp/RtmpoJxd4E/file69e7a21450chtml --include-before-body /tmp/RtmpoJxd4E/file69e1e3c5578html --include-before-body /tmp/RtmpoJxd4E/file69eb0f48cahtml --include-after-body /tmp/RtmpoJxd4E/file69e1873cb72html --include-after-body /tmp/RtmpoJxd4E/file69e5a31b5e8html --include-after-body /tmp/RtmpoJxd4E/file69e759dc09ahtml --include-in-header /tmp/RtmpoJxd4E/rmarkdown-str69e47cffac9.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpoJxd4E/file69e2759c6f4html 
 
 Output created: docs/index.html
+here() starts at /Users/robcavanaugh/random_rprojects/find-aphasia-research
+[1] "/Users/robcavanaugh/random_rprojects/find-aphasia-research"
+-- Attaching packages --------------------------------------- tidyverse 1.3.1 --
+v ggplot2 3.3.5     v purrr   0.3.4
+v tibble  3.1.6     v dplyr   1.0.7
+v tidyr   1.1.4     v stringr 1.4.0
+v readr   2.1.1     v forcats 0.5.1
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter()  masks stats::filter()
+x purrr::flatten() masks jsonlite::flatten()
+x dplyr::lag()     masks stats::lag()
+Usage of the Mapbox APIs is governed by the Mapbox Terms of Service.
+Please visit https://www.mapbox.com/legal/tos/ for more information.
+Rows: 4 Columns: 14
+-- Column specification --------------------------------------------------------
+Delimiter: ","
+chr (14): NCTId, BriefTitle, ResponsiblePartyInvestigatorFullName, OrgFullNa...
+
+i Use `spec()` to retrieve the full column specification for this data.
+i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+Rendering: ./LICENSE.md
+/Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS LICENSE.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output LICENSE.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpJeMxUZ/file2eb121d3667html --include-in-header /tmp/RtmpJeMxUZ/file2eb117c4eedahtml --include-in-header /tmp/RtmpJeMxUZ/file2eb14bdea546html --include-in-header /tmp/RtmpJeMxUZ/file2eb1634bd94html --include-before-body /tmp/RtmpJeMxUZ/file2eb1708a42bahtml --include-before-body /tmp/RtmpJeMxUZ/file2eb1522fb0fhtml --include-before-body /tmp/RtmpJeMxUZ/file2eb13b90986bhtml --include-after-body /tmp/RtmpJeMxUZ/file2eb11206b75ahtml --include-after-body /tmp/RtmpJeMxUZ/file2eb176ef7ef4html --include-after-body /tmp/RtmpJeMxUZ/file2eb16578022chtml --include-in-header /tmp/RtmpJeMxUZ/rmarkdown-str2eb129d6cabf.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpJeMxUZ/file2eb15498d70ehtml 
+[WARNING] This document format requires a nonempty <title> element.
+  Defaulting to 'LICENSE' as the title.
+  To specify a title, use 'title' in metadata or --metadata title="...".
+
+Rendering: ./about.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |......................................................................| 100%
+  ordinary text without R code
+
+
+/Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS about.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output about.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpJeMxUZ/file2eb17570518bhtml --include-in-header /tmp/RtmpJeMxUZ/file2eb17e4f0385html --include-in-header /tmp/RtmpJeMxUZ/file2eb120f9b8e9html --include-in-header /tmp/RtmpJeMxUZ/file2eb16adad9e8html --include-before-body /tmp/RtmpJeMxUZ/file2eb146184526html --include-before-body /tmp/RtmpJeMxUZ/file2eb16363e5bdhtml --include-before-body /tmp/RtmpJeMxUZ/file2eb133800e45html --include-after-body /tmp/RtmpJeMxUZ/file2eb11c28ee6dhtml --include-after-body /tmp/RtmpJeMxUZ/file2eb1433d448chtml --include-after-body /tmp/RtmpJeMxUZ/file2eb16b5f65d0html --include-in-header /tmp/RtmpJeMxUZ/rmarkdown-str2eb1441571c2.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpJeMxUZ/file2eb15bdf9a79html 
+
+Rendering: ./index.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |.......................                                               |  33%
+  ordinary text without R code
+
+  |                                                                              |...............................................                       |  67%
+label: unnamed-chunk-1 (with options) 
+List of 2
+ $ echo  : logi FALSE
+ $ engine: chr "css"
+
+  |                                                                              |......................................................................| 100%
+   inline R code fragments
+
+
+/Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS index.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output index.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpJeMxUZ/file2eb163bb8d5chtml --include-in-header /tmp/RtmpJeMxUZ/file2eb13516ad0ehtml --include-in-header /tmp/RtmpJeMxUZ/file2eb12e3dc62bhtml --include-in-header /tmp/RtmpJeMxUZ/file2eb1599d48c4html --include-before-body /tmp/RtmpJeMxUZ/file2eb1651469d2html --include-before-body /tmp/RtmpJeMxUZ/file2eb11f2f8dd6html --include-before-body /tmp/RtmpJeMxUZ/file2eb16b08ec98html --include-after-body /tmp/RtmpJeMxUZ/file2eb116e5260ehtml --include-after-body /tmp/RtmpJeMxUZ/file2eb11e256ce0html --include-after-body /tmp/RtmpJeMxUZ/file2eb12b0ef596html --include-in-header /tmp/RtmpJeMxUZ/rmarkdown-str2eb1631d60ef.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpJeMxUZ/file2eb11dc71dbfhtml 
+
+Rendering: ./list_view.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |.....                                                                 |   7%
+  ordinary text without R code
+
+  |                                                                              |.........                                                             |  13%
+label: unnamed-chunk-1 (with options) 
+List of 2
+ $ echo  : logi FALSE
+ $ engine: chr "css"
+
+  |                                                                              |..............                                                        |  20%
+  ordinary text without R code
+
+  |                                                                              |...................                                                   |  27%
+label: unnamed-chunk-2 (with options) 
+List of 2
+ $ echo  : logi FALSE
+ $ engine: chr "js"
+
+  |                                                                              |.......................                                               |  33%
+  ordinary text without R code
+
+  |                                                                              |............................                                          |  40%
+label: unnamed-chunk-3 (with options) 
+List of 4
+ $ echo   : logi FALSE
+ $ eval   : logi TRUE
+ $ message: logi FALSE
+ $ warning: logi FALSE
+
+  |                                                                              |.................................                                     |  47%
+  ordinary text without R code
+
+  |                                                                              |.....................................                                 |  53%
+label: unnamed-chunk-4
+  |                                                                              |..........................................                            |  60%
+  ordinary text without R code
+
+  |                                                                              |...............................................                       |  67%
+label: unnamed-chunk-5 (with options) 
+List of 2
+ $ warning: logi FALSE
+ $ message: logi FALSE
+
+  |                                                                              |...................................................                   |  73%
+  ordinary text without R code
+
+  |                                                                              |........................................................              |  80%
+label: unnamed-chunk-6
+  |                                                                              |.............................................................         |  87%
+  ordinary text without R code
+
+  |                                                                              |.................................................................     |  93%
+label: unnamed-chunk-7 (with options) 
+List of 2
+ $ results: chr "asis"
+ $ layout : chr "l-body-outset"
+
+  |                                                                              |......................................................................| 100%
+  ordinary text without R code
+
+
+/Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS list_view.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output list_view.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpJeMxUZ/file2eb122a2ab8fhtml --include-in-header /tmp/RtmpJeMxUZ/file2eb16fe309f4html --include-in-header /tmp/RtmpJeMxUZ/file2eb165ad4b0chtml --include-in-header /tmp/RtmpJeMxUZ/file2eb1541a34fahtml --include-before-body /tmp/RtmpJeMxUZ/file2eb148c3439html --include-before-body /tmp/RtmpJeMxUZ/file2eb110b88c84html --include-before-body /tmp/RtmpJeMxUZ/file2eb1441136afhtml --include-after-body /tmp/RtmpJeMxUZ/file2eb1461d3e12html --include-after-body /tmp/RtmpJeMxUZ/file2eb129d633b4html --include-after-body /tmp/RtmpJeMxUZ/file2eb12ddc83e1html --include-in-header /tmp/RtmpJeMxUZ/rmarkdown-str2eb16856404c.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpJeMxUZ/file2eb176977317html 
+
+Rendering: ./recent.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |..........                                                            |  14%
+  ordinary text without R code
+
+  |                                                                              |....................                                                  |  29%
+label: unnamed-chunk-1 (with options) 
+List of 2
+ $ echo  : logi FALSE
+ $ engine: chr "css"
+
+  |                                                                              |..............................                                        |  43%
+  ordinary text without R code
+
+  |                                                                              |........................................                              |  57%
+label: unnamed-chunk-2 (with options) 
+List of 4
+ $ echo   : logi FALSE
+ $ eval   : logi TRUE
+ $ message: logi FALSE
+ $ warning: logi FALSE
+
+  |                                                                              |..................................................                    |  71%
+  ordinary text without R code
+
+  |                                                                              |............................................................          |  86%
+label: unnamed-chunk-3 (with options) 
+List of 1
+ $ layout: chr "l-body-outset"
+
+  |                                                                              |......................................................................| 100%
+  ordinary text without R code
+
+
+/Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS recent.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output recent.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpJeMxUZ/file2eb159e5535ahtml --include-in-header /tmp/RtmpJeMxUZ/file2eb16c0c57chtml --include-in-header /tmp/RtmpJeMxUZ/file2eb15ec367d1html --include-in-header /tmp/RtmpJeMxUZ/file2eb16ed4faf1html --include-before-body /tmp/RtmpJeMxUZ/file2eb160a71d0fhtml --include-before-body /tmp/RtmpJeMxUZ/file2eb17b64f55bhtml --include-before-body /tmp/RtmpJeMxUZ/file2eb1212868a7html --include-after-body /tmp/RtmpJeMxUZ/file2eb163eebcf2html --include-after-body /tmp/RtmpJeMxUZ/file2eb14eb6e71fhtml --include-after-body /tmp/RtmpJeMxUZ/file2eb149ffcc98html --include-in-header /tmp/RtmpJeMxUZ/rmarkdown-str2eb138d1351c.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpJeMxUZ/file2eb12ef5de68html 
+
+Rendering: ./remote.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |..........                                                            |  14%
+  ordinary text without R code
+
+  |                                                                              |....................                                                  |  29%
+label: unnamed-chunk-1 (with options) 
+List of 2
+ $ echo  : logi FALSE
+ $ engine: chr "css"
+
+  |                                                                              |..............................                                        |  43%
+  ordinary text without R code
+
+  |                                                                              |........................................                              |  57%
+label: unnamed-chunk-2 (with options) 
+List of 4
+ $ echo   : logi FALSE
+ $ eval   : logi TRUE
+ $ message: logi FALSE
+ $ warning: logi FALSE
+
+  |                                                                              |..................................................                    |  71%
+  ordinary text without R code
+
+  |                                                                              |............................................................          |  86%
+label: unnamed-chunk-3 (with options) 
+List of 1
+ $ layout: chr "l-body-outset"
+
+  |                                                                              |......................................................................| 100%
+  ordinary text without R code
+
+
+/Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS remote.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output remote.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpJeMxUZ/file2eb11fd531fahtml --include-in-header /tmp/RtmpJeMxUZ/file2eb11fab2fe4html --include-in-header /tmp/RtmpJeMxUZ/file2eb165c42469html --include-in-header /tmp/RtmpJeMxUZ/file2eb130329db1html --include-before-body /tmp/RtmpJeMxUZ/file2eb14b0ee82fhtml --include-before-body /tmp/RtmpJeMxUZ/file2eb13fad8c28html --include-before-body /tmp/RtmpJeMxUZ/file2eb11accb6c1html --include-after-body /tmp/RtmpJeMxUZ/file2eb175f246a5html --include-after-body /tmp/RtmpJeMxUZ/file2eb174fc3721html --include-after-body /tmp/RtmpJeMxUZ/file2eb15a879387html --include-in-header /tmp/RtmpJeMxUZ/rmarkdown-str2eb17ae6b27f.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpJeMxUZ/file2eb13fd0eee2html 
+
+Rendering: ./uk-europe-map.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |..........                                                            |  14%
+  ordinary text without R code
+
+  |                                                                              |....................                                                  |  29%
+label: unnamed-chunk-1 (with options) 
+List of 2
+ $ echo  : logi FALSE
+ $ engine: chr "css"
+
+  |                                                                              |..............................                                        |  43%
+  ordinary text without R code
+
+  |                                                                              |........................................                              |  57%
+label: setup (with options) 
+List of 1
+ $ include: logi FALSE
+
+  |                                                                              |..................................................                    |  71%
+  ordinary text without R code
+
+  |                                                                              |............................................................          |  86%
+label: unnamed-chunk-2 (with options) 
+List of 3
+ $ echo      : logi FALSE
+ $ layout    : chr "l-screen-inset shaded"
+ $ out.height: chr "88vh"
+
+  |                                                                              |......................................................................| 100%
+  ordinary text without R code
+
+
+/Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS uk-europe-map.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output uk-europe-map.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpJeMxUZ/file2eb136357b43html --include-in-header /tmp/RtmpJeMxUZ/file2eb125ec33b0html --include-in-header /tmp/RtmpJeMxUZ/file2eb1712f8782html --include-in-header /tmp/RtmpJeMxUZ/file2eb16769a1dbhtml --include-before-body /tmp/RtmpJeMxUZ/file2eb1480165e7html --include-before-body /tmp/RtmpJeMxUZ/file2eb153c9459fhtml --include-before-body /tmp/RtmpJeMxUZ/file2eb142f9f4b2html --include-after-body /tmp/RtmpJeMxUZ/file2eb1282ff478html --include-after-body /tmp/RtmpJeMxUZ/file2eb1645b06e4html --include-after-body /tmp/RtmpJeMxUZ/file2eb114219635html --include-in-header /tmp/RtmpJeMxUZ/rmarkdown-str2eb1290c7be6.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpJeMxUZ/file2eb1729a4e17html 
+
+Rendering: ./us-canada-map.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |..........                                                            |  14%
+  ordinary text without R code
+
+  |                                                                              |....................                                                  |  29%
+label: unnamed-chunk-1 (with options) 
+List of 2
+ $ echo  : logi FALSE
+ $ engine: chr "css"
+
+  |                                                                              |..............................                                        |  43%
+  ordinary text without R code
+
+  |                                                                              |........................................                              |  57%
+label: setup (with options) 
+List of 1
+ $ include: logi FALSE
+
+  |                                                                              |..................................................                    |  71%
+  ordinary text without R code
+
+  |                                                                              |............................................................          |  86%
+label: unnamed-chunk-2 (with options) 
+List of 3
+ $ echo      : logi FALSE
+ $ layout    : chr "l-screen-inset shaded"
+ $ out.height: chr "88vh"
+
+  |                                                                              |......................................................................| 100%
+  ordinary text without R code
+
+
+/Applications/RStudio.app/Contents/MacOS/pandoc/pandoc +RTS -K512m -RTS us-canada-map.knit.md --to html5 --from markdown+autolink_bare_uris+tex_math_single_backslash --output us-canada-map.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --standalone --variable toc-float=1 --highlight-style /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/arrow.theme --template /Library/Frameworks/R.framework/Versions/4.1/Resources/library/distill/rmarkdown/templates/distill_article/resources/default.html '--metadata=link-citations:true' --include-in-header /tmp/RtmpJeMxUZ/file2eb129cce83fhtml --include-in-header /tmp/RtmpJeMxUZ/file2eb11a4cd36ehtml --include-in-header /tmp/RtmpJeMxUZ/file2eb14ba39589html --include-in-header /tmp/RtmpJeMxUZ/file2eb160ae7c2ahtml --include-before-body /tmp/RtmpJeMxUZ/file2eb15f59dafchtml --include-before-body /tmp/RtmpJeMxUZ/file2eb1438074chtml --include-before-body /tmp/RtmpJeMxUZ/file2eb17a6710bdhtml --include-after-body /tmp/RtmpJeMxUZ/file2eb147c2713html --include-after-body /tmp/RtmpJeMxUZ/file2eb172e952b1html --include-after-body /tmp/RtmpJeMxUZ/file2eb134341d67html --include-in-header /tmp/RtmpJeMxUZ/rmarkdown-str2eb149766ff7.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpJeMxUZ/file2eb17eb0e6cehtml 
+
+Output created: docs/index.html
