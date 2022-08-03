@@ -48,16 +48,16 @@ function copyDivToClipboard(param1) {
 knitr::opts_chunk$set(echo = FALSE)
 
 library(htmltools)
-library(flexdashboard)
+#library(flexdashboard)
 library(here)
 library(tidyverse)
 library(htmltools)
 library(knitr)
 library(kableExtra)
 
-study_info = readRDS("~/random_rprojects/find-aphasia-research/data/study_info.rds")
-contact_dat = readRDS("~/random_rprojects/find-aphasia-research/data/contact.rds")
-location_dat = readRDS("~/random_rprojects/find-aphasia-research/data/location.rds")
+study_info = readRDS(here::here("data", "study_info.rds"))
+contact_dat = readRDS(here::here("data", "contact.rds"))
+location_dat = readRDS(here::here("data", "location.rds"))
 
 ```
 

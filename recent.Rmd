@@ -31,7 +31,7 @@ library(knitr)
 library(DT)
 library(glue)
 
-data = readRDS("~/random_rprojects/find-aphasia-research/data/data_dt.rds") 
+data = readRDS(here::here("data", "data_dt.rds")) 
 
 data_prep = data %>%
   arrange(desc(date)) %>%

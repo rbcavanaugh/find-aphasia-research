@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/random_rprojects/find-aphasia-research
+cd ~/github-repos/find-aphasia-research
 
 git add .
 

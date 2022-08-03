@@ -1,4 +1,4 @@
-setwd("~/random_rprojects/find-aphasia-research")
+setwd("~/github-repos/find-aphasia-research")
 
 library(here)
 
