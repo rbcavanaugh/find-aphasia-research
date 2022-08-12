@@ -46,12 +46,12 @@ add_manual = manual %>%
 
 print("added manual")
 
-data2 = bind_rows(data, add_manual) %>%
+data2 = bind_rows(data, add_manual) %>% print("bind successful") %>%
   mutate(geo = list(mb_geocode(location)),
                 lon = geo[1],
                 lat = geo[2],
-         date=lubridate::mdy(StartDate)) %>%
-  select(-geo)
+         date=lubridate::mdy(StartDate)) %>% print("mutate successful") %>%
+  select(-geo) print("all successful") %>%
 
 print("got lat and lon")
 
