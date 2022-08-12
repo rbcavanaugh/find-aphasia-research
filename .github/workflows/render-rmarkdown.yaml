@@ -31,7 +31,7 @@ jobs:
       - name: Install mapboxapi
         run: Rscript -e 'install.packages("mapboxapi")'
       - name: Install sf
-        run: Rscript -e 'install.packages("sf")'
+        run: Rscript -e 'install.packages("sf", type = "binary")'
       - name: Install tidyverse
         run: Rscript -e 'install.packages("tidyverse")'
         
