@@ -1,4 +1,4 @@
-setwd("~/github-repos/find-aphasia-research")
+#setwd("~/github-repos/find-aphasia-research")
 
 library(mapboxapi)
 # Comment out for local push
@@ -16,4 +16,3 @@ Sys.sleep(5)
 Sys.setenv(RSTUDIO_PANDOC="/Applications/RStudio.app/Contents/MacOS/pandoc")
 
 rmarkdown::render_site(encoding = 'UTF-8')
-
