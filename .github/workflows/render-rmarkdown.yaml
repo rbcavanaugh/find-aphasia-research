@@ -22,15 +22,17 @@ jobs:
         run: Rscript -e 'install.packages("rmarkdown")'
       - name: Install distill
         run: Rscript -e 'install.packages("distill")'
-      - name: Install distill
+      - name: Install httr
         run: Rscript -e 'install.packages("httr")'
-      - name: Install distill
+      - name: Install jsonlite
         run: Rscript -e 'install.packages("jsonlite")'
-      - name: Install distill
+      - name: Install here
         run: Rscript -e 'install.packages("here")'
-      - name: Install distill
+      - name: Install mapboxapi
         run: Rscript -e 'install.packages("mapboxapi")'
-      - name: Install distill
+      - name: Install sf
+        run: Rscript -e 'install.packages("sf")'
+      - name: Install tidyverse
         run: Rscript -e 'install.packages("tidyverse")'
         
       - name: Get data from clinicaltrials.gov and rebuild site
