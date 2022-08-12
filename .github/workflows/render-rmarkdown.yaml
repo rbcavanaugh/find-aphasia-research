@@ -1,0 +1,47 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+on:
+  push:
+    branches: master
+  schedule:
+    - cron: '0 0 * * MON'
+
+
+name: render website
+
+jobs:
+  render:
+    name: Rebuild Website
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-pandoc@v1
+      
+      - name: Install rmarkdown
+        run: Rscript -e 'install.packages("rmarkdown")'
+      - name: Install distill
+        run: Rscript -e 'install.packages("distill")'
+      - name: Install distill
+        run: Rscript -e 'install.packages("httr")'
+      - name: Install distill
+        run: Rscript -e 'install.packages("jsonlite")'
+      - name: Install distill
+        run: Rscript -e 'install.packages("here")'
+      - name: Install distill
+        run: Rscript -e 'install.packages("mapboxapi")'
+      - name: Install distill
+        run: Rscript -e 'install.packages("tidyverse")'
+        
+      - name: Get data from clinicaltrials.gov and rebuild site
+        env: 
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
+        run: Rscript R/update_website.R
+        
+      - name: Render Rmarkdown files and Commit Results
+        run: |
+          git add .
+          git commit -m 'Re-build website' || echo "No changes to commit"
+          git push origin || echo "No changes to commit"

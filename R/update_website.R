@@ -1,5 +1,10 @@
 setwd("~/github-repos/find-aphasia-research")
 
+library(mapboxapi)
+# Comment out for local push
+MAPBOX_SECRET <- Sys.getenv("MAILBOX")
+mb_access_token(MAPBOX_SECRET, install = FALSE)
+
 library(here)
 
 here()

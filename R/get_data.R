@@ -1,10 +1,13 @@
 
 
+
+
+
 library(httr)
 library(jsonlite)
 library(tidyverse)
 library(here)
-library(mapboxapi)
+
 
 # read in manual data
 manual = read_csv(here("data", "manual-submissions.csv")) %>%
