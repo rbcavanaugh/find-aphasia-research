@@ -11,6 +11,8 @@ here()
 
 source(here("R", "get_data.R"))
 
+print("get data successful!!")
+
 Sys.sleep(5)
 
 Sys.setenv(RSTUDIO_PANDOC="/Applications/RStudio.app/Contents/MacOS/pandoc")

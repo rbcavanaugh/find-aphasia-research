@@ -51,7 +51,7 @@ data2 = bind_rows(data, add_manual) %>% print("bind successful") %>%
                 lon = geo[1],
                 lat = geo[2],
          date=lubridate::mdy(StartDate)) %>% print("mutate successful") %>%
-  select(-geo) print("all successful") %>%
+  select(-geo) print("all successful")
 
 print("got lat and lon")
 
