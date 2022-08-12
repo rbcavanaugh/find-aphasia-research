@@ -1,8 +1,4 @@
 
-
-
-
-
 library(httr)
 library(jsonlite)
 library(tidyverse)
@@ -48,16 +44,31 @@ print("added manual")
 
 data2 = bind_rows(data, add_manual)
 
+print("bind rows")
+
 data2 = data2 %>%
-  mutate(geo = list(mb_geocode(location)),
-                lon = geo[1],
-                lat = geo[2],
-         date=lubridate::mdy(StartDate))
+  mutate(geo = list(mb_geocode(location)))
+
+print("got geo")
+
+data2$lon = data2$geo[1]
+
+print("extracted lon")
+
+data2$lat = data2$geo[2]
+
+print("extracted lat")
+
+data2$date = lubridate::mdy(data2$StartDate)
+
+print("fixed date")
 
 data2 = data2 %>%
   select(-geo)
 
-print("got lat and lon")
+print("dropped geo")
+
+print("did mapbox stuff successfully")
 
 
 write.csv(data2, file = here("data", "clinical_trials_clean.csv"))
