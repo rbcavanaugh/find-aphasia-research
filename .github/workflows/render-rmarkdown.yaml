@@ -35,9 +35,7 @@ jobs:
         
       - name: Get data from clinicaltrials.gov and rebuild site
         env: 
-          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
+          MAPBOX_API: ${{ secrets.MAILBOX }}
         run: Rscript R/update_website.R
         
       - name: Render Rmarkdown files and Commit Results
