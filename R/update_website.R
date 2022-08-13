@@ -2,8 +2,7 @@
 
 library(mapboxapi)
 # Comment out for local push
-MAPBOX_SECRET <- Sys.getenv("MAPBOX_API")
-mb_access_token(as.character(MAPBOX_SECRET), install = FALSE)
+mb_access_token(Sys.getenv("MAPBOX"), install = FALSE)
 
 library(here)
 
