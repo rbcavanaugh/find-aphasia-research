@@ -46,27 +46,12 @@ data2 = bind_rows(data, add_manual)
 
 print("bind rows")
 
-data2 = data2 %>%
-  mutate(geo = list(mb_geocode(location, access_token = token)))
-
-print("got geo")
-
-data2$lon = data2$geo[1]
-
-print("extracted lon")
-
-data2$lat = data2$geo[2]
-
-print("extracted lat")
-
-data2$date = lubridate::mdy(data2$StartDate)
-
-print("fixed date")
-
-data2 = data2 %>%
+data2 = bind_rows(data, add_manual) %>%
+  mutate(geo = list(mb_geocode(location, access_token = token)),
+         lon = geo[1],
+         lat = geo[2],
+         date=lubridate::mdy(StartDate)) %>%
   select(-geo)
-
-print("dropped geo")
 
 print("did mapbox stuff successfully")
 
