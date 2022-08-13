@@ -3,7 +3,7 @@
 library(mapboxapi)
 # Comment out for local push
 token = Sys.getenv("MAPBOX")
-print(length(token))
+print(nchar(token))
 mb_access_token(token, install = FALSE)
 
 library(here)
