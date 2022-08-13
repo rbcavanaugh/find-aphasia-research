@@ -35,7 +35,7 @@ jobs:
         
       - name: Get data from clinicaltrials.gov and rebuild site
         env: 
-          MAPBOX_API: ${{ secrets.MAILBOX }}
+          MAPBOX: ${{ secrets.MAPBOX }}
         run: Rscript R/update_website.R
         
       - name: Render Rmarkdown files and Commit Results
