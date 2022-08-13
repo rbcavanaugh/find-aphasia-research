@@ -4,7 +4,7 @@ library(mapboxapi)
 # Comment out for local push
 token = Sys.getenv("MAPBOX")
 print(nchar(token))
-mb_access_token(token, install = FALSE)
+#mb_access_token(token, install = FALSE)
 
 library(here)
 

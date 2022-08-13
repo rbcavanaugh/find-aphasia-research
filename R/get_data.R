@@ -47,7 +47,7 @@ data2 = bind_rows(data, add_manual)
 print("bind rows")
 
 data2 = data2 %>%
-  mutate(geo = list(mb_geocode(location)))
+  mutate(geo = list(mb_geocode(location, access_token = token)))
 
 print("got geo")
 
