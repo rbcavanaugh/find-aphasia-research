@@ -36,6 +36,8 @@ jobs:
         run: Rscript -e 'install.packages("emojifont")'
       - name: Install DT
         run: Rscript -e 'install.packages("DT")'
+      - name: Install janitor
+        run: Rscript -e 'install.packages("janitor")'
       - name: Install kableExtra
         run: Rscript -e 'install.packages("kableExtra")'
         
