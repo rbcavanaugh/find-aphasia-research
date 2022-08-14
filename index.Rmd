@@ -19,7 +19,7 @@ d-appendix{
 
 <div class = "btn" onclick = "location.href='us-canada-map.html'">
 United States & Canada
-<div style="font-size:3rem;">`r emo::ji("us")`&nbsp;`r emo::ji("canada")`</div>
+<div style="font-size:3rem;">`r emojifont::emoji("us")`&nbsp;`r emojifont::emoji("canada")`</div>
 </div>
 
 :::
@@ -27,7 +27,7 @@ United States & Canada
 ::: {.col}
 <div class = "btn" onclick = "location.href='uk-europe-map.html'">
 United Kingdom & Europe
-<div style="font-size:3rem;">`r emo::ji("uk")`&nbsp;`r emo::ji("eu")` </div>
+<div style="font-size:3rem;">`r emojifont::emoji("uk")`&nbsp;`r emojifont::emoji("eu")` </div>
 </div>
 :::
 

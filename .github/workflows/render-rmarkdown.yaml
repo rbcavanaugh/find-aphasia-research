@@ -32,10 +32,9 @@ jobs:
         run: Rscript -e 'install.packages("mapboxapi", type = "binary")'
       - name: Install tidyverse
         run: Rscript -e 'install.packages("tidyverse")'
-      - name: Install devtools
-        run: Rscript -e 'install.packages("devtools")'
-      - name: Install emo from remotes
-        run: Rscript -e 'devtools::install_github("hadley/emo")'
+      - name: Install emojifont
+        run: Rscript -e 'install.packages("emojifont")'
+
         
       - name: Get data from clinicaltrials.gov and rebuild site
         env: 
