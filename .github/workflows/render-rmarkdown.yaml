@@ -34,7 +34,10 @@ jobs:
         run: Rscript -e 'install.packages("tidyverse")'
       - name: Install emojifont
         run: Rscript -e 'install.packages("emojifont")'
-
+      - name: Install DT
+        run: Rscript -e 'install.packages("DT")'
+      - name: Install kableExtra
+        run: Rscript -e 'install.packages("kableExtra")'
         
       - name: Get data from clinicaltrials.gov and rebuild site
         env: 
