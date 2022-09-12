@@ -527,6 +527,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-article table.gt_table td,
   d-article table.gt_table th {
     border-bottom: none;
+    font-size: 100%;
   }
   
   .html-widget {
@@ -1599,15 +1600,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
-          var fn = $(this).children()[0]
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+  
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
           $(this).html(fn.shadowRoot.querySelector("sup"))
           $(this).id = fn.id
           fn.remove()
         }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
-          return "<p>" + $('#ref-' + ref).html() + "</p>";
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
         }).join("\n");
         window.tippy(this, {
           allowHTML: true,
@@ -2365,8 +2372,8 @@ th, td {
 
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
-<div id="htmlwidget-e7c106af4e9404d7c1d7" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e7c106af4e9404d7c1d7">{"x":{"filter":"none","vertical":false,"data":[["Indiana University Bloomington","Indiana University Bloomington","University of Nevada Reno","Georgia State University"],["<a href=list_view.html#manual2>Characterizing inner speech in aphasia<\/a>","<a href=list_view.html#manual3>Inner speech as a naming therapy predictor in aphasia<\/a>","<a href=list_view.html#manual4>Measuring and understanding the experience of post-traumatic growth in aphasia<\/a>","<a href=list_view.html#manual5>Reading in Aphasia<\/a>"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Institution<\/th>\n      <th>Name<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"pageLength":5,"columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-76e00f8fd0898e6c00f9" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-76e00f8fd0898e6c00f9">{"x":{"filter":"none","vertical":false,"data":[["Indiana University Bloomington","Indiana University Bloomington","University of Nevada Reno","Georgia State University"],["<a href=list_view.html#manual2>Characterizing inner speech in aphasia<\/a>","<a href=list_view.html#manual3>Inner speech as a naming therapy predictor in aphasia<\/a>","<a href=list_view.html#manual4>Measuring and understanding the experience of post-traumatic growth in aphasia<\/a>","<a href=list_view.html#manual5>Reading in Aphasia<\/a>"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Institution<\/th>\n      <th>Name<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"pageLength":5,"columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->

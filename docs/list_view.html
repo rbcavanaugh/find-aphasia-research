@@ -527,6 +527,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-article table.gt_table td,
   d-article table.gt_table th {
     border-bottom: none;
+    font-size: 100%;
   }
   
   .html-widget {
@@ -1599,15 +1600,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
-          var fn = $(this).children()[0]
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+  
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
           $(this).html(fn.shadowRoot.querySelector("sup"))
           $(this).id = fn.id
           fn.remove()
         }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
-          return "<p>" + $('#ref-' + ref).html() + "</p>";
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
         }).join("\n");
         window.tippy(this, {
           allowHTML: true,
@@ -2429,14 +2436,18 @@ Country: United States
 <div class="cities">
 City: Boston, Massachusetts; Maywood, New Jersey; Philadelphia, Pennsylvania
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 <p>The proposed research will test the efficacy of group conversation treatment for people with aphasia and explore whether the effects of treatment differ as a result of the following factors:</p>
-<p>Group size: Do large groups of 6-8 people with aphasia or dyads of 2 people with aphasia demonstrate different levels of improvement with this treatment? Group composition: Do effects of conversation group treatment differ if the groups include members with similar or different types of aphasia? Aphasia severity: Do effects of conversation group treatment differ if the individuals within the group have mild-moderate or moderate-severe profiles of aphasia?</p>
+<p>Group size: Do large groups of 6-8 people with aphasia or dyads of 2 people with aphasia demonstrate different levels of improvement with this treatment?
+Group composition: Do effects of conversation group treatment differ if the groups include members with similar or different types of aphasia?
+Aphasia severity: Do effects of conversation group treatment differ if the individuals within the group have mild-moderate or moderate-severe profiles of aphasia?</p>
 <p>Treatment sessions will occur in groups of 6-8 people with aphasia or with 2 people with aphasia. During treatment sessions, discourse will be facilitated on a focused set of every day topics, such as current events or travel. Linguistic and multi modal cueing hierarchies will be tailored to individual client goals and used to maximize communication success.</p>
 The prediction is that conversation treatment is an effective method for improving communication in people with aphasia, but that specific benefits may differ based on variables such as group size, group composition, and aphasia severity. The results will help inform best practices for aphasia treatment and refine a hypothesized model about the mechanisms underlying conversation treatment.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 Criteria for All Treatment Cycles
 <li>
@@ -2478,7 +2489,8 @@ Cycle 3 Severity-based Inclusion Criteria (Planned 2024):
 <div>
 NA
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -2577,11 +2589,13 @@ Country: Sweden
 <div class="cities">
 City: Stockholm
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The present study aims to investigate the short- and long-term effects of two weeks of intensive speech-language pathology intervention with additional physiotherapy, on aphasia and apraxia of speech (AOS) and their neural correlates in thirty persons with chronic stroke. Changes are studied following intensive treatment of aphasia and AOS with standardised speech-language testing and testing of communication and with voxel-based morphometry (VBM) analysis and resting state functional connectivity (rsFC).
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Aphasia 7 months post stroke diagnosed by SLP
@@ -2601,7 +2615,8 @@ Metal implants (preventing fMRI)
 <li>
 Claustrophobia (preventing fMRI)
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -2675,11 +2690,13 @@ Country: Canada
 <div class="cities">
 City: Edmonton, Alberta; Toronto, Ontario
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Rising life expectancy is leading to a rising incidence of strokes worldwide. Approximately one third of people who had a stroke live with a communication disorder, aphasia, which is associated with the largest negative relationship to quality of life. In chronic stages, people with aphasia (PwA) often do not receive any rehabilitation, despite treatment being shown to significantly reduce impairment. In contrast to existing computerized aphasia treatment, VoiceAdapt is an innovative and motivating application for PwA that provides adaptive and context-aware training lessons via speech interaction on the mobile device. A user-centred design process and motivational gamification ensure long-term engagement in training. Through providing an autonomously usable and low-cost tool, VoiceAdapt will positively affect PwA’s self-esteem and social inclusion, leading to higher quality of life.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 be at least 6 months post onset of a single stroke in the left hemisphere
@@ -2697,7 +2714,8 @@ be willing to commit to participation for study duration<br>
 <li>
 Currently participating in individual (one-on-one) speech-language therapy
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -2792,12 +2810,14 @@ Country: United States
 <div class="cities">
 City: Pittsburgh, Pennsylvania
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 <p>The proposed study is a Stage I successive cohort trial intended to adapt Acceptance and Commitment Therapy (ACT) to meet the specific needs of stroke survivors with aphasia (“ACT for Aphasia”). It will do so by incorporating communication supports and compensatory speech-language treatment. The goal of developing this integrated treatment is to improve successful communication participation, psychosocial adjustment, and quality of life for stroke survivors with aphasia.</p>
 In the first phase of the project, the investigators will create a treatment manual with input from a stakeholder advisory board consisting of caregivers and stroke survivors with aphasia. The investigators will then recruit an initial cohort of five stroke survivors with aphasia to undergo the initial version of the treatment based and provide feedback. This will aid revision of the manual, which the investigators will then evaluate using a second cohort of 16 stroke survivors with aphasia. The investigators predict that ACT for Aphasia will be acceptable and feasible based on measures of participant satisfaction and treatment adherence. The investigators will also measure pre- to post-treatment changes in psychological distress, functional disability, quality of life, and communication participation and functioning to establish preliminary effect size estimates for this intervention, in preparation for a subsequent Stage II efficacy trial.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Participants will be age 18 or older.
@@ -2819,7 +2839,8 @@ Participants with unmanaged drug /alcohol dependence.
 <li>
 Participants with severe diagnose.d mood or behavioral disorders that require specialized mental health interventions
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -2893,11 +2914,13 @@ Country: United States
 <div class="cities">
 City: Philadelphia, Pennsylvania; Seattle, Washington
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 This project aims to develop a clinically feasible version of a laboratory-developed assessment battery for language and verbal short-term memory difficulties in aphasia.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 . single or multiple left hemisphere lesions
@@ -2915,7 +2938,8 @@ passed an audiometric pure-tone, air conduction screening at 25 dB HL at 1K, 2K 
 <li>
 English as a second language Right hemisphere stroke Less than 6 months post-onset of stroke.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -3010,12 +3034,14 @@ Country: Canada
 <div class="cities">
 City: Calgary, Alberta
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 <p>Many stroke survivors experience aphasia, a loss or impairment of language affecting the production or understanding of speech. One common type of aphasia is known as non-fluent aphasia. Patients with non-fluent aphasia have difficulty formulating grammatical sentences, often producing short word fragments despite having a good understanding of what others are trying to communicate to them. Speech language pathologists (SLPs) play a central role rehabilitating persons with aphasia and administer therapy in an attempt to improve communication skills. Despite standard therapy, approximately 50% of individuals who experience aphasia acutely continue to have language deficits more than 6 months post-stroke.</p>
 In most people, Broca’s area is dominant in the left side of the brain. Following a left-sided stroke, the right-sided homologue of Broca’s area (the pars triangularis), may adopt language function. Unfortunately, reorganizing language to the right side of the brain seems to be less effective than restoring function to the left hemisphere. Repetitive transcranial magnetic stimulation (rTMS), a form of non-invasive brain stimulation, can be used to suppress activity of specific regions in the right side of the brain to promote recovery of function in the perilesional area. Despite preliminary success in existing studies using rTMS in post-stroke aphasia, there is much work to be done to better understand the mechanisms underlying recovery. Responses to rTMS have been positive, yet heterogenous, which may be related to timing of treatments following stroke.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Isolated left middle cerebral artery (MCA) stroke within past 3 months (sub-acute) or more than 6 months ago (chronic)
@@ -3045,7 +3071,8 @@ Has received intensive speech therapy within the past 6 months (&gt;8 hours per 
 <li>
 Enrolled in another interventional study
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -3119,11 +3146,13 @@ Country: United States
 <div class="cities">
 City: Charleston, South Carolina; Columbia, South Carolina
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Speech-language therapy is generally found to be helpful in the rehabilitation of aphasia. However, not all patients with aphasia have access to adequate treatment to maximize their recovery. The goal of this project is to compare the efficacy of telerehabilitation or Aphasia Remote Therapy (ART) to the more traditional In-Clinic Therapy (I-CT).
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Participants must have sustained a left hemisphere ischemic or hemorrhagic stroke at least 12 months prior to enrollment.
@@ -3151,7 +3180,8 @@ Participants must not have anything that makes them be 3T MRI incompatible
 <li>
 Insufficient intelligible speech to provide accurate responses with discourse/naming.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -3246,11 +3276,13 @@ Country: United States
 <div class="cities">
 City: Little Rock, Arkansas
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The purpose of the study is to examine the impact of group participation on adults with aphasia. Participants will complete a standard pre-and post-assessment of language abilities (speech, comprehension, reading, and/or writing). Then participants will attend 90-minute weekly reading group sessions during an academic semester.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Age 18 years or older
@@ -3268,7 +3300,8 @@ No history of childhood speech or language difficulties
 <li>
 No history of major psychiatric illness, cognitive impairment, or neurological disorders such as seizures
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -3363,12 +3396,14 @@ Country: United States
 <div class="cities">
 City: Boston, Massachusetts
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 <p>This study incorporates metacognitive strategy training into semantic feature analysis treatment. Semantic feature analysis treatment has a strong evidence base and capacity to improve word retrieval by encouraging circumlocution. Circumlocution facilitates self-cued naming and assists listener comprehension when naming fails. However, semantic feature analysis treatment does not include direct techniques to teach patients with aphasia to generalize the use of semantic feature analysis treatment’s circumlocution procedure. Therefore, this study proposes that combining semantic feature analysis treatment and metacognitive strategy training will stimulate the semantic system and increase patients with aphasias’ use of circumlocution across divergent contexts.</p>
 This study aims to measure the treatment’s effect on naming accuracy for trained and untrained items. The study also aim to measure the treatment’s effect on people with aphasias’ knowledge of the strategy components and changes in verbalizations during retrieval attempts. The central hypothesis is that strategy training will increase patients with aphasias’ explicit knowledge about circumlocution and enable them to use it to (1) self-facilitate naming, and (2) produce more informative connected speech.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Experienced a single left-hemisphere stroke,
@@ -3392,7 +3427,8 @@ Be in the acute stage of their aphasia, &lt;6 months post onset of stroke;
 <li>
 Have a diagnosis of neurodegenerative disease, significant mental illness, psychiatric disorder, drug/alcohol abuse, or neurological condition that could influence cognitive, language, and memory systems
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -3487,12 +3523,14 @@ Country: United States
 <div class="cities">
 City: Charleston, South Carolina; Columbia, South Carolina; Salt Lake City, Utah
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 <p>After a stroke, many people experience a language impairment called aphasia. One of the most debilitating types of aphasia is non-fluent aphasia. Non-fluent aphasia is defined by significantly reduced speech production, with the speaker producing only a few words or even less. Speech entrainment therapy (SET) is a treatment that has been shown to increase fluency in people with non-fluent aphasia. The study looks to define the best dose of SET that leads to sustained improvements in spontaneous speech production.</p>
 Participants who are eligible will undergo baseline language testing, an MRI, and will be randomized into one of 4 treatment groups: SET for 3 weeks, SET for 4.5 weeks, SET for 6 weeks, and no treatment (control group).
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Aphasia as a result of a left hemisphere ischemic or hemorrhagic stroke (WAB-R Aphasia Quotient &lt;93.8).
@@ -3528,7 +3566,8 @@ Uncorrectable hearing as determined by the SLP’s clinical judgment.
 <li>
 Uncorrectable vision.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -3627,11 +3666,13 @@ Country: Spain
 <div class="cities">
 City: Madrid
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The DULCINEA study aims to develop and validate a new therapy that integrates essential language characteristics and functional communication by dubbing scenes from television series that represent daily situations. It will be a randomized, crossed over, interventional pilot study recruiting 54 patients with poststroke nonfluent aphasia. Patients will be treated individually in 40-minute sessions twice a week for 8 weeks. In each session, a speech therapist and an actor will select the clips with muted words or sentences that have been detected as functionally meaningful for each patient. Outcomes will be assessed as significant differences in two aphasia tests.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 nonfluent aphasia due to unilateral stroke in the left hemisphere without neuroimaging evidence of lesions in the right hemisphere.
@@ -3647,7 +3688,8 @@ Any clinical condition (short life expectancy, coexisting disease) or other char
 <li>
 Participation in any therapeutic trial evaluating poststroke recovery.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -3742,12 +3784,14 @@ Country: Turkey
 <div class="cities">
 City: Istanbul
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 <p>In a randomized controlled trial, efficacy of low-frequency, inhibitory rTMS will be examined in rehabilitation of acquired aphasia. Two cortical sites will be targeted: Right-hemispheric homologues of Broca’s and Wernicke’s areas.</p>
 In addition to cognitive screening prior to onset of rTMS, language assessments will be conducted before, during and after the intervention. An eyetracking-while-listening experiment will also be conducted before and after the intervention to investigate morphosyntactic processing.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Right-handedness,
@@ -3785,7 +3829,8 @@ Having an implant (e.g., cochlear implant) or stimulator (e.g., deep brain stimu
 <li>
 Taking central nervous system active drugs that lower seizure threshold (as listed in the aforementioned guidelines)
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -3880,11 +3925,13 @@ Country: Poland
 <div class="cities">
 City: Warsaw, Masovian Voivodeship
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Aphasia is an impairment in the ability to express and/or understand language, commonly observed after stroke to the language dominant (left) hemisphere. Despite natural tendency to spontaneous functional recovery in the first months post stroke and language improvement due to application of behavioral speech and language therapy (SLT), many aphasic patients do not achieve satisfactory level of verbal communication. The aim of the planned study is to explore the potential of the noninvasive repetitive Transcranial Magnetic Stimulation (rTMS) as a therapeutic tool for aphasia in addition to traditional behavioral therapy. In case of aphasia, studies on therapeutic effectiveness of rTMS aim to increase the activity of the language-dominant left cerebral hemisphere, which may be achieved in an indirect manner by inhibiting the activity of the opposite (right) hemisphere or in a direct manner by increasing the excitability of preserved language areas in the left hemisphere. In our study, we plan to administer the newest form of rTMS called Theta Burst Stimulation (TBS), which is safer than the conventional rTMS, even when used in the perilesional area. Computer-based neuronavigation system will be implemented to precisely localize stimulation targets, control administration of stimuli during rTMS sessions, and evaluate differences between participants regarding deviations from established stimulation points. 45 patients (all right-handed, polish native speakers, aged 18-75 years, diagnosed with non-fluent aphasia) will be enrolled in a randomized, double-blind, sham-controlled trial. Subjects will be randomly assigned to one of the three groups: 1) a group with excitatory intermittent TBS of the left hemisphere (iTBS group), 2) a group with inhibitory continuous TBS of the right hemisphere (cTBS group), 3) a group with sham TBS (sTBS group as a control group). Specific forms of stimulation will be carried out for three consecutive weeks (Monday to Friday; a total of 15 stimulation sessions). Immediately after each session of the stimulation, patients will undergo individual SLT. Assessment of language functioning will be carried out three times: before and after the therapy period, and 3 months after its completion. Results of the study will broaden knowledge about hemispherical mechanisms of language and speech recovery after stroke and provide insight into possibilities of their modulation for the purpose of post-stroke rehabilitation.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 First-ever left middle cerebral artery ischemic stroke (brain damage localization confirmed by magnetic resonance imaging, MRI)
@@ -3918,7 +3965,8 @@ Visual deficits significantly hindering the perception of therapeutic tasks pres
 <li>
 New neurological episode (e. g. another brain stroke) or somatic illness (e. g. COVID-19) during the cycle of the therapy, requiring its interruption.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -4013,11 +4061,13 @@ Country: United States
 <div class="cities">
 City: Hershey, Pennsylvania
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Aphasia is a loss of language due to stroke or other brain injury. Word-finding in conversation is a universal and persistent difficulty in aphasia. While several techniques exist to improve word-finding in aphasia, it is unclear how the brain changes in response to behavioral therapy. In this study, persons with aphasia will receive behavioral therapy aimed at helping them to be more successful at finding words. Twenty therapy sessions will be provided in a 10-week period. Each therapy session will last about 2 hours and will include a variety of language tasks. Prior to beginning word-finding therapy, each participant will receive two fMRI scans, spaced 10 weeks apart. After finishing therapy, each participant will receive two additional fMRI scans, spaced 10 weeks apart. For a portion of the MRI scan, participants will complete language tasks. The purpose of these fMRI scans is to measure brain changes that may occur due to successful behavioral therapy. The hypotheses are as follows: First, that the behavioral therapy will improve word-finding as it has been shown to do in the past. Second, that the brain will change in a couple of different ways. It is expected that the network of regions that support word-finding will be more connected and work together more efficiently after therapy. It is also expected that the networks of regions that support other aspects of cognitive function, such as attention and executive function, will also be more connected and work together more efficiently.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Diagnosis of aphasia
@@ -4051,7 +4101,8 @@ Pregnancy or possibility of pregnancy
 <li>
 Do not meet the above inclusionary criteria
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -4125,11 +4176,13 @@ Country: United Kingdom
 <div class="cities">
 City: Birmingham, West Midlands
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Aphasia is a language impairment experienced by about one third of stroke patients. This often devastating condition is treated by speech and language therapists (SLTs). There is evidence that language games delivered at the right intensity are an efficacious means of improving communication for people with post stroke aphasia. However, it is unclear which mechanism of language facilitation used in a game works best. This study will provide evidence for the “active ingredient” of a game, together with measures of efficacy, feasibility and enjoyment compared to standard aphasia therapy.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Adults who have suffered a stroke a minimum of 2 months prior to commencement of the intervention. They will present with expressive aphasia, with relatively preserved language comprehension. They will have been fully fluent in English before the stroke.<br>
@@ -4139,7 +4192,8 @@ Adults who have suffered a stroke a minimum of 2 months prior to commencement of
 <li>
 Severe perceptual or cognitive deficits. History of other neurological, psychiatric or neurodegenerative disease impairing language or communicative ability. Severe visual agnosia. Severe limb apraxia. Severe dysarthria. Drug or alcohol abuse.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -4213,11 +4267,13 @@ Country: United States
 <div class="cities">
 City: West Lafayette, Indiana
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 This study focuses on developing a novel treatment for sentence production and comprehension in aphasia, using implicit priming. First set of experiments will aim examine which priming conditions are most effective in creating maximal learning effects. Then, in a later experiment, the investigators will develop and test the efficacy of a novel treatment study based on findings from the first set of the experiments.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Individuals with post-stroke aphasia
@@ -4243,7 +4299,8 @@ Uncontrolled psychiatric/psychological conditions affecting thinking and communi
 <li>
 Active alcohol/substance abuse
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -4338,11 +4395,13 @@ Country: United States
 <div class="cities">
 City: Columbia, South Carolina
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Aphasia is the most common type of post-stroke communication disorder characterized by deficits in speech comprehension, production and control. While recovery can be promoted with speech therapy, improvement remains modest and typically requires a large number of sessions contributing to rising health care costs. Traditional aphasia therapy focus on enhancing speech motor output; however, recent evidence suggests that the auditory feedback also plays a critical role in fluent speech. Therefore, a key step toward refining treatment strategies is to develop objective biomarkers that can probe the integrity of sensorimotor mechanisms of speech auditory feedback and identify their impaired function in patients with post-stroke aphasia. This study aims to examine the behavioral, neurophysiological (EEG), and neuroimaging (fMRI) biomarkers of speech impairment following stroke with focus on understanding the role of auditory feedback for speech production and control. We plan to test individuals with post-stroke aphasia and a matched neuroptypical control group during different speech production tasks under the altered auditory feedback paradigm. In addition, we aim to examine the effect of audio-visual feedback training on enhancing communication ability during speech. These biomarkers will be combined with existing lesion-symptom-mapping data in the aphasic group in order to identify the patterns of brain damage and diminished structural connectivity within the auditory-motor areas of the left hemisphere that predict impaired sensorimotor processing of speech in aphasia. The long-term goal of this research is to develop a model for identifying the source of sensorimotor deficit and improve diagnosis and targeted treatment of speech disorders in aphasia.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 A total of 50 individuals with aphasia due to chronic left hemisphere stroke (&gt; 6 months post-stroke) and 50 age- and gender-matched healthy control subjects will be recruited in this study. The general inclusion criteria for all subjects include: age range 21-75 years, right-handed, and native speaker of English. The aphasic subjects have previously undergone neuro-psychological speech/language testing and have been diagnosed with one type of aphasia (e.g., Broca’s, Wernicke’s, conduction or anomic). Subjects in the control group will meet the inclusion criteria with having normal voice, speech, language, and hearing function and no history of neurological and psychiatric disorder. We expect that a significant proportion of aphasic patients will show symptoms associated with Apraxia of Speech (AOS) or dysarthria; however, these patients will not be excluded unless their deficits will preclude them from performing the experimental tasks.<br>
@@ -4352,7 +4411,8 @@ A total of 50 individuals with aphasia due to chronic left hemisphere stroke (&g
 <li>
 Subjects with moderate to severe hearing, memory, and/or cognitive impairments will be excluded for both groups. In addition, subjects with history of peripheral laryngeal disorders (e.g., paresis or vocal fold paralysis) will be excluded. Subjects will undergo safety screening and will be excluded if there are any factors counter-indicative for EEG and/or MRI scanning.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -4426,11 +4486,13 @@ Country: United States
 <div class="cities">
 City: Pittsburgh, Pennsylvania
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 This randomized controlled comparative effectiveness study examines manipulation of a key component of an established and efficacious treatment for naming impairments in aphasia, along with cognitive and brain correlates of treatment success. Study participants will be randomly assigned to one of two treatment conditions comparing two different versions of Semantic Feature Analysis treatment. Their performance on standardized and study-specific measures will be used to determine which version of the treatment provides superior outcomes, and measures of automatic language processing and functional brain imaging will also be used to identify the underlying neurocognitive mechanisms associated with positive treatment response.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 6 months post-onset of aphasia due to unilateral left-hemisphere (LH) stroke
@@ -4460,7 +4522,8 @@ Severe motor speech disorder
 <li>
 Active substance dependence
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -4555,12 +4618,14 @@ Country: United States
 <div class="cities">
 City: Philadelphia, Pennsylvania
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 <p>The aim of this research is to translate a theory of the cognitive relationship between verbal short–term memory (STM) and word processing impairments in aphasia to treatment approaches for language impairment in aphasia. It has been proposed that the co-occurrence of these impairments is due to a disruption of cognitive processes that support both abilities: maintenance of activated semantic and phonological representations of words, hereafter the ‘activation–maintenance hypothesis’.</p>
 This hypothesis will be tested in the context of a treatment approach that aims to improve word processing and verbal STM abilities.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 Experimental participants
 <li>
@@ -4605,7 +4670,8 @@ High school educated or above
 <li>
 Pass an audiometric pure tone, air conduction screening at 25 dB HL at 1K, 2K and 4K Hz for at least one ear.<br>
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -4700,11 +4766,13 @@ Country: United States
 <div class="cities">
 City: Philadelphia, Pennsylvania
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Transcranial Magnetic Stimulation (TMS) has been demonstrated to improve language function in subjects with chronic aphasia in a number of small studies, many of which did not include a control group. Although the treatment appears promising, data to date do not permit an adequate assessment of the utility of the technique. The investigators propose to study the effects of TMS combined with Constraint Induced Language Therapy (CILT) in 75 subjects with chronic aphasia. Subjects will be randomized in a 2:1 ratio to TMS with CILT or sham TMS with CILT. One Hz TMS at 90% motor threshold will be delivered to the right inferior frontal gyrus for 20 minutes in 10 sessions over 2 weeks; language therapy will be provided for one hour immediately after the conclusion of each session of TMS. Change from baseline in the Western Aphasia Battery Aphasia Quotient at 6 months after the end of TMS treatment will serve as the primary outcome measure. A secondary aim is to identify anatomic and behavioral predictors of response to treatment. Finally, a third aim is to identify the mechanism underlying the beneficial effect of the treatment using a variety of imaging techniques. Subjects who have no contraindication to the MRI will undergo fMRI imaging prior to and at 6 months after therapy. Using modern network analyses and robust machine learning techniques, the investigators will identify changes in the strengths of connections between nodes in the language network to address specific hypotheses regarding the effects of TMS and CILT on brain organization that are associated with beneficial response to treatment.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Clinical evidence and MRI or CT verification of a single left hemisphere stroke with moderate to severe aphasia.
@@ -4728,7 +4796,8 @@ Chronic exposure to medications that might be expected to have lasting consequen
 <li>
 History of or neuropsychological findings suggestive of dementia
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -4823,11 +4892,13 @@ Country: United States
 <div class="cities">
 City: San Francisco, California; Boston, Massachusetts; Austin, Texas
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The purpose of this investigation is to implement a computational model that can predict and optimize training and cross-language generalization patterns for bilingual persons with aphasia (BPA). The proposed work will determine the best possible treatment program for each individual patient even before they are rehabilitated. In addition, the computational model allows specification of variables such as age of acquisition, language exposure/proficiency, impairment and their systematic influence on a range of language rehabilitation outcomes.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Any number of years of education
@@ -4865,7 +4936,8 @@ Diagnosed with mental illness other than active depression
 <li>
 Neurological condition other than that which resulted in aphasia
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -4939,11 +5011,13 @@ Country: France
 <div class="cities">
 City: Toulouse, Midi-Pyrénées
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Linguistic training is traditionally the gold standard for rehabilitation of aphasia after stroke and efficacy criteria count early stage, intensity as well as personalized treatment. To date, no clear evidence showed a specific effect of any therapy in the acute phase of aphasia after stroke. This study aims to compare the effect of a combined therapy (linguistic/communication) versus a linguistic therapy on communication performance in patients in the acute phase of aphasia after a first stroke.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 First stroke
@@ -4975,7 +5049,8 @@ Adults protected by Law
 <li>
 Participation to another research
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -5070,11 +5145,13 @@ Country: Korea, Republic of
 <div class="cities">
 City: Seongnam-si, Korea, Gyeonggi-do
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The aim of this study is to assess the safety and clinical efficacy of repetitive transcranial magnetic stimulation (rTMS) based on hemodynamic brain activity pattern with functional near infrared spectroscopy (fNIRS) in early poststroke nonfluent aphasia patients.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 18-80 yrs old
@@ -5110,7 +5187,8 @@ Metal implants in the body (cardiac pacemaker or aneurysm clip)
 <li>
 Pregnancy, breastfeeding
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -5205,11 +5283,13 @@ Country: United States
 <div class="cities">
 City: Columbus, Ohio
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Aphasia, or language impairment after a stroke, affects approximately 2 million people in the United States, with an estimated 180,000 new cases each year. The medical community cannot predict how well someone with aphasia will respond to treatment, as some people with aphasia are poor responders to intervention even when participating in empirically supported treatments. There is a strong likelihood that genetics play a role in language recovery after stroke, but very little research has been dedicated to investigating this link. This study will investigate whether two genes and cognitive abilities, such as memory, predict responsiveness to aphasia therapy for word-retrieval difficulties.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 At least six months post-onset of a single left-hemisphere stroke
@@ -5235,7 +5315,8 @@ Uncorrected vision or hearing difficulties
 <li>
 Contraindications for MRI (e.g. cardiac pacemaker, ferrous metal implants, claustrophobia, pregnancy).
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -5330,11 +5411,13 @@ Country: United States
 <div class="cities">
 City: New York, New York
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The aim of the trial is to determine whether 75Hz transcranial alternating current stimulation (tACS) synchronized with therapeutic linguistic tasks is an effective form of therapy for post-stroke aphasia.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 Individuals with aphasia (assessed using the Boston Aphasia Diagnostic Test) who perform the Naming Task in the range of 10%-60% accuracy will be included in the study. The final score in the Naming Task will be estimated from the two baseline measurements.
 <li>
@@ -5374,7 +5457,8 @@ history of speech, language, hearing, or intellectual disability during childhoo
 <li>
 pregnancy (based on declarations)<br>
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -5473,11 +5557,13 @@ Country: United States
 <div class="cities">
 City: Chicago, Illinois
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The purpose of this study is to evaluate how changing conditions of speech-language treatment (namely, amount of repetition and distribution of practice schedule) affects the language outcome of participants with aphasia following a stroke. Using a computer based speech and language therapy program, participants will practice conversational scripts that are either short or long. Participants will practice for either 2 weeks (5 days a week) or for 5 weeks (2 days a week).
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Men or women with diagnosis of aphasia
@@ -5507,7 +5593,8 @@ Any significant psychiatric history prior to the stroke, such as severe major de
 <li>
 Active substance abuse
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -5602,11 +5689,13 @@ Country: China
 <div class="cities">
 City: Hefei
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 To investigate the intervention effect of high definition transcranial alternating current stimulation(HD-tACS) in chronic post-stroke aphasia and its underlying neural mechanism by MRI.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 aphasia diagnosed by the ABC.
@@ -5632,7 +5721,8 @@ alcohol or substance abuse.
 <li>
 cerebral tumor or abscess.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -5727,11 +5817,13 @@ Country: United States
 <div class="cities">
 City: Syracuse, New York
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Language and communication are essential for almost every aspect of human life, but for people who have aphasia, a language processing disorder that can occur after stroke or brain injury, even simple conversations can become a formidable challenge. Speech and language therapy can help people recover their language ability, but often requires months or even years of therapy before a person is able to overcome these challenges. This research will investigate non-invasive brain stimulation as a way to enhance the effects of speech and language therapy, which may ultimately lead to better and faster recovery from stroke and aphasia. The investigators hypothesize that participants with aphasia who receive speech and language therapy paired with active electrical brain stimulation will improve significantly more on a language comprehension task than those who receive speech and language therapy paired with sham stimulation.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 18 years or older.
@@ -5797,7 +5889,8 @@ Unable to pass vision and/or hearing screening with use of corrective aids.
 <li>
 Unwilling to allow audio-recording of study sessions.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -5871,11 +5964,13 @@ Country: United States
 <div class="cities">
 City: Chicago, Illinois
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Aphasia is an acquired (typically left-hemisphere) multi-modality disturbance of language that impacts around 2 million people in the USA. Aphasia impacts language production and comprehension as well as reading and writing. The ramifications of aphasia extend beyond language impairment to negatively impacting a person’s social, vocational, and recreational activities. Currently, the most effective way to treat aphasia is with speech-language therapy (SLT). However, even if SLT is intensive, persons with aphasia are left with residual language delays. Recent research suggests that pairing SLT with transcranial direct current stimulation (tDCS) a non-invasive, safe, low-cost form of brain stimulation may aid language recovery in persons with aphasia. However, results from tDCS studies are inconclusive. The success of tDCS in combination with SLT could depend on the timing of tDCS since tDCS-induced effects depend on the neuronal state of the brain-networks at the time of the stimulation. In this study, the differential impact of tDCS before behavioral SLT (offline-before therapy), tDCS after SLT (offline-after therapy), and tDCS concurrently with SLT (online) on functional language recovery in persons with aphasia will be investigated. Sham tDCS (i.e., SLT alone) as a control group will also be included in the study. The investigators hypothesize that both offline and online tDCS will improve language functioning than sham tDCS.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Men or women with diagnosis of fluent or non-fluent aphasia subsequent to a left-hemisphere infarct(s) that is confirmed by a MRI or CT scan
@@ -5905,7 +6000,8 @@ Active substance use
 <li>
 Individuals with epilepsy
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -6000,11 +6096,13 @@ Country: United States
 <div class="cities">
 City: Baltimore, Maryland; Charleston, South Carolina; Columbia, South Carolina
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 In this project, the investigators will investigate the effects of a selective serotonin reuptake inhibitor (SSRI), escitalopram, on augmenting language therapy effectiveness, as measured by naming untrained pictures and describing pictures, in individuals with aphasia in the acute and subacute post stroke period (i.e., within three months post stroke).
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Participants must have sustained an acute ischemic left hemisphere stroke.
@@ -6042,7 +6140,8 @@ A QTc greater than 450 milliseconds on electrocardiogram or evidence of hyponatr
 <li>
 Pregnancy at the time of stroke or planning to become pregnant during the study term.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -6141,11 +6240,13 @@ Country: Germany
 <div class="cities">
 City: Aachen; Allensbach; Bad Aibling; Bad Homburg; Bad Klosterlausnitz; Bad Sülze; Berlin; Gailingen; Greifswald; Greifswald; Göppingen; Heidelberg; Kempen; Leipzig; Lindlar; Marbach; Meerbusch; Vechta
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The aim of the study is to investigate whether intensive speech-language therapy (SLT) combined with anodal transcranial direct current stimulation (tDCS) leads to better communication performance than SLT combined with placebo stimulation (using sham-tDCS).
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 left-hemisphere cortical or subcortical stroke with first-ever aphasic symptoms
@@ -6191,7 +6292,8 @@ severely impaired vision or hearing that prevents patients from engaging in inte
 <li>
 changes in centrally active drugs within 2 weeks prior to study inclusion.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -6286,11 +6388,13 @@ Country: United States
 <div class="cities">
 City: Boston, Massachusetts
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Speaking in unison with another person is included as a part of many treatment approaches for aphasia. It is not well understood why and how this technique works. One goal of this study is to determine who benefits from speaking in unison, and what characteristics of speech are most helpful. Another goal is to investigate a possible mechanism for this benefit: why does speaking in unison help? A possible mechanism for this benefit is examined, by testing whether the degree of alignment of a person’s speech with that of another speaker can account for unison benefit.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Native-speaker fluency in American English (prior to stroke for people with aphasia)
@@ -6310,7 +6414,8 @@ Inadequate speech repetition ability to complete task, or to be considered a con
 <li>
 Inadequate auditory comprehension ability to understand task: fail auditory comprehension screen (people with aphasia only)
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -6384,11 +6489,13 @@ Country: Switzerland
 <div class="cities">
 City: Bern; Lucerne
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The aim of this study is to investigate the effects of high-frequency short duration tablet-based speech and language therapy (teleSLT) mixed with cognitive training (teleCT) in chronic stroke patients. Recent studies suggest that chronic stroke patients benefit from SLT with high frequency and that cognitive abilities can play a role in sentence comprehension and production by individuals with aphasia. To investigate the effects of the distribution of training time for teleSLT and teleCT the investigators use two combinations. In the experimental group 80% of the training time will be devoted to teleSLT and 20% to teleCT whereas in the control group 20% of the training time will be devoted to teleSLT and 80% to teleCT. Both groups receive the same total amount and frequency of intervention but with different distributions. At three time points (pre-, post-test and 8 week follow-up) the patients’ word finding ability is measured.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Aged 18 or over.
@@ -6412,7 +6519,8 @@ Requirement for treatment in language other than German.
 <li>
 Currently using a computer speech therapy software.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -6507,11 +6615,13 @@ Country: United States
 <div class="cities">
 City: Little Rock, Arkansas
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The purpose this study is to test the utility of pairing external neuromodulation with behavioral language treatment to boost therapy outcomes and to investigate the mechanisms associated with recovery. Because all PWA have word retrieval deficits, this project will test if greater language gains can be achieved by supplementing anomia intervention with excitatory brain stimulation to the left hemisphere and will evaluate associated functional brain changes to aid the optimization of neural reorganization to facilitate language processing.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Presence of post-stroke aphasia
@@ -6541,7 +6651,8 @@ Clinical conditions contraindicated for MRI or tDCS (e.g., implanted electrical 
 <li>
 Positive pregnancy test (for females)
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -6636,11 +6747,13 @@ Country: Russian Federation
 <div class="cities">
 City: Moscow
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The aim of the study is to determine virtual reality (VR) impact during standard program of rehabilitation on emotional state of patients with aphasia.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Mild or moderate aphasia of any type
@@ -6672,7 +6785,8 @@ Significant current psychiatric illness defined as affective disorder unresponsi
 <li>
 Current participation in another interventional trial
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -6767,11 +6881,13 @@ Country: United States
 <div class="cities">
 City: Milwaukee, Wisconsin
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 This study will assess the effects of transcranial alternating current stimulation (tACS) on language recovery after stroke as well as healthy language functions.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Healthy Controls
@@ -6813,7 +6929,8 @@ History of seizures
 <li>
 History of dyslexia or other developmental learning disabilities
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -6887,11 +7004,13 @@ Country: United States
 <div class="cities">
 City: Tempe, Arizona
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 A stratified, parallel-group, double-blind, randomized controlled trial of remotely delivered START treatment to individuals with severe-to-moderate stroke (with recruitment focused on individuals with low SES) will be conducted. Subjects and assessors will be blinded to the condition making the experiment double blind. Specifically, subjects will be told that we are exploring a new therapy that using different sounds to improve therapy. Parallel group design will ensure that subjects in the Control group are unaware that their “sounds” are softer than the START group. Trainers may become aware that a loud sound is present thus a unique Assessor will evaluate clinical performance before and after training making the study double-blind. Fifty-four subjects will undergo baseline testing in the laboratory to establish their capacity for functional and expressive speech as well as their self-reported health-related quality of life (power analysis below). Next, subjects will participate in a high-frequency, word-picture verification/ auditory-repetition treatment, 2 hr/day for 5 consecutive days focusing on expression of words of functional significance (e.g., water, fall). Subjects will either receive training with START or without (Control). Subjects will be re-tested immediately following training as well as one-month post to assess retention. Aim 1 will evaluate capacity of START to enhance SLT outcomes by assessing the % change in clinical assessment of functional and expressive speech. Our preliminary data points to a robust response [details]. Aim 2 will focus on the capacity of these changes to 1) be retained and 2) impact subject’s reported quality of life. NOTE: While we are planning in-person baseline, end, and retention testing, in response to COVID, we have established remote clinical screening using peer-reviewed validated techniques for WAB and ABA-2 (see Alternative Solutions). All preliminary data collected for this proposal were collected remotely via no-contact protocols.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 18 years old
@@ -6915,7 +7034,8 @@ Corrected pure tone threshold (octave frequencies 250- 4000 Hz) norms for their 
 <li>
 Severe concurrent uncontrolled medical problems (e.g. cardiorespiratory impairment).
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -6989,11 +7109,13 @@ Country: Hong Kong
 <div class="cities">
 City: Kowloon
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The efficacy of conventional speech therapy alone for aphasia recovery is inconclusive. The prospective study will monitor the effects of combined language therapy and tDCS through structural and functional MRI.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 History of a single unilateral left-hemispheric stroke,
@@ -7023,7 +7145,8 @@ Have cochlear implants, pacemaker, surgical nails for bone fracture, artificial 
 <li>
 Taking anti-depressant medications
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -7122,11 +7245,13 @@ Country: Sweden
 <div class="cities">
 City: Gothenburg, Västra Götaland
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Although there is evidence that speech-language therapy may improve speech in language disorders following left hemisphere stroke there is still a lack of evidence for which types of therapy are effective. Furthermore, in Sweden, as well as in several other countries, access to speech-language therapy is limited. The purpose of this clinical trial is to compare outcome from Verb Network Strengthening Treatment (VNeST) provided as In-Clinic therapy (I-CT) or as synchronous telepractice therapy (TP-T).
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Aphasia and subjective experience of word finding difficulties
@@ -7150,7 +7275,8 @@ Participation in any other speech-language treatment during the study
 <li>
 Active substance dependence
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -7245,11 +7371,13 @@ Country: France
 <div class="cities">
 City: Grenoble
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 SEMO is a multidisciplinary project (language sciences, cognitive psychology and neuropsychology, physical medicine and rehabilitation, neurology, speech-language pathology, functional neuroimaging and engineering sciences) that aims first, to test and develop a novel speech rehabilitation program designed for patients with non-fluent aphasia and, second, to better describe neural reorganization after successful recovery. To this end, the investigators will conduct a prospective monocentric cross-over study, including two cohorts of post-stroke aphasic patients and two control groups.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 patients with late sub-acute and chronic post-stroke (&gt; 4 months) non-fluent aphasia after lesion in the dominant hemisphere for language
@@ -7265,7 +7393,8 @@ satisfying all criteria for the MRI examination<br>
 <li>
 patients with comprehension deficits, hemi-spatial neglect or upper limb apraxia
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -7339,11 +7468,13 @@ Country: United States
 <div class="cities">
 City: Milwaukee, Wisconsin
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 This study will investigate the effects of mild electrical stimulation in conjunction with speech therapy for people with post-stroke aphasia to enhance language recovery.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Patients with a language deficit from focal neurologic damage (e.g. stroke, tumor).
@@ -7363,7 +7494,8 @@ No suspected or diagnosed uncorrectable hearing or vision difficulties, or devel
 <li>
 Contraindications to MRI such as claustrophobia, implanted electronic devices, MRI-incompatible metal in the body, extreme obesity, pregnancy, inability to lie flat, and inability to see or hear stimulus materials
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -7437,11 +7569,13 @@ Country: United States
 <div class="cities">
 City: Decatur, Georgia
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Every year approximately 15,000 Veterans are hospitalized for stroke, and up to 40% of those Veterans will experience stroke-related language impairment (i.e., aphasia). Stroke-induced aphasia results in increased healthcare costs and decreased quality of life. As the population of Veterans continues to age, there will be an increasing number for Veterans living with the aphasia and its consequences. Those Veterans deserve to receive aphasia treatment designed to facilitate the best possible outcomes. In the proposed study, the investigators will investigate optimal treatment intensity and predictors of treatment response for a novel word retrieval treatment. The knowledge the investigators gain will have direct implications for the selecting the right treatment approach for the right Veteran.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 English as primary language
@@ -7463,7 +7597,8 @@ Clinically significant depression
 <li>
 For MRI safety: implanted medical devices, metal in the body and claustrophobia.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -7562,11 +7697,13 @@ Country: United States
 <div class="cities">
 City: New York, New York
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The study will focus on the impact of communal singing on patients with stroke and their personal caregivers. Forty post-stroke patients will be randomly assigned to two groups: the first group of 20 stroke survivors and their caregivers (up to 40 total participants) will receive 6 months (approximately 24 sessions) of music therapy. The second control groups of 20 stroke survivors and their caregivers will receive standard post-stroke care
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Stroke victim, regardless of level of stroke<br>
@@ -7576,7 +7713,8 @@ Stroke victim, regardless of level of stroke<br>
 <li>
 None
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -7650,11 +7788,13 @@ Country: Taiwan
 <div class="cities">
 City: Taipei
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 The refinement of repetitive transcranial magnetic stimulation (rTMS) has highlighted its merit in terms of learning programs as a treatment for aftereffect augmentation. Nevertheless, the efficacy of synchronous rTMS protocol integrated with computer-integrated speech training is not well understood. It is also not clear regarding the efficacy of compound bi-hemispheric stimulation protocol. The aim of the study is to investigate language response to these new strategies and to determine the longevity of the therapeutic outcome. Advanced MR neuroimaging techniques, such as fMRI and DTI, are powerful tools to evaluate the concomitant nervous changes after rTMS treatment on aphasic patients. The knowledge from fMRI and DTI microstructural evolution provides insight into underlined mechanism operating the language improvement.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Aphasic stroke in chronic stage (over 3 months)<br>
@@ -7664,7 +7804,8 @@ Aphasic stroke in chronic stage (over 3 months)<br>
 <li>
 No seizure history, no brain surgery history, no electronic device in brain or chest, no dementia
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -7738,11 +7879,13 @@ Country: United States
 <div class="cities">
 City: Pittsburgh, Pennsylvania
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Logbooks are one of the most commonly used methods to both support and track adherence in research studies. This study will look at using logbooks to support adherence to reading practice for individuals with post-stroke aphasia. It is thought that using a logbook will increase practice time.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 at least 6 months post left hemisphere stroke with a diagnosis of aphasia
@@ -7762,7 +7905,8 @@ actively receiving speech-language pathology services in which computerized or r
 <li>
 severe auditory comprehension impairment that limits understanding of one-step directions (i.e., Western Aphasia Battery-Revised sequential commands subtest score below 8).
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -7836,11 +7980,13 @@ Country: United States
 <div class="cities">
 City: Washington, District of Columbia
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Strokes often cause a loss of communication ability, referred to as aphasia, as well as cognitive difficulties. Each stroke survivor has a unique pattern of strengths and weaknesses in communication and cognition, and a unique course of recovery. The BUILD study aims to understand the brain basis of these individual differences in stroke outcome. Participants with stroke as well as controls matched in age, educational background, race, and sex are examined using a combination of standardized and in-house tests of language and cognition to provide a detailed profile of strengths and weaknesses. Each participant will have between three and six sessions, including an MRI to measure details of the structure, function, and connections in the brain. The data are analyzed to test how patterns in the stroke lesion explain the patterns of communication and cognitive difficulties, and how patterns in the uninjured parts of the brain explain resilience and recovery from the stroke. Ultimately, we hope that BUILD will guide us toward new targets for brain stimulation treatments or other biologically based treatments that improve language and cognitive abilities after stroke.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Stroke Survivors:
@@ -7870,7 +8016,8 @@ History of a learning disability that could impact interpretation of results
 <li>
 Additional
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -7965,11 +8112,13 @@ Country: United States
 <div class="cities">
 City: Milwaukee, Wisconsin
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 This study will look at the way activity within the brain changes over time while a person is trying to think about certain everyday concepts. To measure brain activity accurately, we will be using electrodes placed on people’s brains during awake brain surgery.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Clinically determined to require an awake left temporal resection of a brain lesion with concurrent language testing.
@@ -7985,7 +8134,8 @@ Patients with inability to make decisions regarding their participation in this 
 <li>
 Surgeon does not plan to expose the area of interest or determines that recording during the resection will interfere with his surgical plan.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -8059,11 +8209,13 @@ Country: United States
 <div class="cities">
 City: Decatur, Georgia
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 Of the 15,000 Veterans who are hospitalized for stroke each year more than half experience spatial and motor impairments and pain. Spatial-motor-sensory problems limit functioning and independence, which is costly to Veterans, their families, and society. Currently, spatial-motor-sensory problems are targeted using different treatments. However, there is a treatment that has shown promise in simultaneously targeting spatial function, motor function and pain in right-brain stroke. The investigators propose to investigate the feasibility of using adapted spatial-motor sensory assessment and treatment procedures for Veterans with left-brain stroke who have language and cognitive impairment. The next step will be to conduct a large-scale study focused on this multi-target treatment for more efficient and effective stroke rehabilitation. The investigators expect this line of research to increase functioning, independence and quality of life in Veteran stroke survivors.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 1-3 months post-stroke, entering outpatient treatment
@@ -8081,7 +8233,8 @@ able to provide informed consent to participate, using aphasia-accessible proces
 <li>
 History of brain conditions other than left brain stroke, including clinical right brain pathology.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -8180,12 +8333,17 @@ Country: United States
 <div class="cities">
 City: New York, New York
 </div>
-<br/> <b>Brief Description:</b>
+<br/>
+<b>Brief Description:</b>
 <div class="summary">
 <p>The purpose of this study is to determine how inflammation is related to other changes in the brain that occur during the progression of Alzheimer’s disease. The investigators are also studying how inflammation is related to the symptoms that first occur in patients with Alzheimer’s disease (AD). For this reason, the investigators are asking people with different versions of Alzheimer’s disease to participate. This includes patients with either:</p>
-Posterior cortical atrophy - a version of Alzheimer’s disease with vision difficulties Logopenic variant primary progressive aphasia - a version of Alzheimer’s disease with language difficulties Amnestic Alzheimer’s disease - a “typical” version of Alzheimer’s disease with memory difficulties The investigators are also enrolling older adults with normal visual, language, and memory function.
+Posterior cortical atrophy - a version of Alzheimer’s disease with vision difficulties
+Logopenic variant primary progressive aphasia - a version of Alzheimer’s disease with language difficulties
+Amnestic Alzheimer’s disease - a “typical” version of Alzheimer’s disease with memory difficulties
+The investigators are also enrolling older adults with normal visual, language, and memory function.
 </div>
-<br/> <b>Inclusion Criteria:</b>
+<br/>
+<b>Inclusion Criteria:</b>
 <div>
 <li>
 Age 50 to 75 years at time of screening.
@@ -8219,7 +8377,8 @@ Participation in the last year in a clinical trial for a disease modifying drug 
 <li>
 Taking immunosuppressive medication (e.g., glucocorticoids, cytostatics, antibodies, drugs acting on immunophilins, interferons, tumor necrosis factor inhibitors). Nonsteroidal anti-inflammatory drugs (NSAIDs) are not exclusionary.
 </div>
-<br/> <b>Contact Information:</b>
+<br/>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -8314,7 +8473,11 @@ Country: United States
 <div class="cities">
 City: Boston, MA
 </div>
-<br/> <a href="data/flyers/kiran.jpg" target="_blank"> <img src="data/flyers/kiran.jpg" class="flyer"/> </a> <b>Contact Information:</b>
+<br/>
+<a href="data/flyers/kiran.jpg" target="_blank">
+<img src="data/flyers/kiran.jpg" class="flyer"/>
+</a>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -8348,7 +8511,8 @@ Email:
 <div>
 
 </div>
-<br/> <em style="font-size:0.7rem;">This study was submitted manually, not through clinicaltrials.gov</em>
+<br/>
+<em style="font-size:0.7rem;">This study was submitted manually, not through clinicaltrials.gov</em>
 </div>
 <p><br/></p>
 <div id="manual2-modal" class="modalDialog">
@@ -8389,7 +8553,11 @@ Country: United States
 <div class="cities">
 City: Bloomington, IN
 </div>
-<br/> <a href="data/flyers/stark2021a.jpg" target="_blank"> <img src="data/flyers/stark2021a.jpg" class="flyer"/> </a> <b>Contact Information:</b>
+<br/>
+<a href="data/flyers/stark2021a.jpg" target="_blank">
+<img src="data/flyers/stark2021a.jpg" class="flyer"/>
+</a>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -8423,7 +8591,8 @@ Email:
 <div>
 
 </div>
-<br/> <em style="font-size:0.7rem;">This study was submitted manually, not through clinicaltrials.gov</em>
+<br/>
+<em style="font-size:0.7rem;">This study was submitted manually, not through clinicaltrials.gov</em>
 </div>
 <p><br/></p>
 <div id="manual3-modal" class="modalDialog">
@@ -8464,7 +8633,11 @@ Country: United States
 <div class="cities">
 City: Bloomington, IN
 </div>
-<br/> <a href="data/flyers/stark2021b.jpg" target="_blank"> <img src="data/flyers/stark2021b.jpg" class="flyer"/> </a> <b>Contact Information:</b>
+<br/>
+<a href="data/flyers/stark2021b.jpg" target="_blank">
+<img src="data/flyers/stark2021b.jpg" class="flyer"/>
+</a>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -8498,7 +8671,8 @@ Email:
 <div>
 
 </div>
-<br/> <em style="font-size:0.7rem;">This study was submitted manually, not through clinicaltrials.gov</em>
+<br/>
+<em style="font-size:0.7rem;">This study was submitted manually, not through clinicaltrials.gov</em>
 </div>
 <p><br/></p>
 <div id="manual4-modal" class="modalDialog">
@@ -8539,7 +8713,11 @@ Country: United States
 <div class="cities">
 City: Reno, NV
 </div>
-<br/> <a href="data/flyers/brancamp.jpg" target="_blank"> <img src="data/flyers/brancamp.jpg" class="flyer"/> </a> <b>Contact Information:</b>
+<br/>
+<a href="data/flyers/brancamp.jpg" target="_blank">
+<img src="data/flyers/brancamp.jpg" class="flyer"/>
+</a>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -8573,7 +8751,8 @@ Email:
 <div>
 
 </div>
-<br/> <em style="font-size:0.7rem;">This study was submitted manually, not through clinicaltrials.gov</em>
+<br/>
+<em style="font-size:0.7rem;">This study was submitted manually, not through clinicaltrials.gov</em>
 </div>
 <p><br/></p>
 <div id="manual5-modal" class="modalDialog">
@@ -8614,7 +8793,11 @@ Country: United States
 <div class="cities">
 City: Atlanta, GA
 </div>
-<br/> <a href="data/flyers/harrington2022.pdf" target="_blank"> <img src="data/flyers/harrington2022.pdf" class="flyer"/> </a> <b>Contact Information:</b>
+<br/>
+<a href="data/flyers/harrington2022.pdf" target="_blank">
+<img src="data/flyers/harrington2022.pdf" class="flyer"/>
+</a>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -8648,7 +8831,8 @@ Email:
 <div>
 
 </div>
-<br/> <em style="font-size:0.7rem;">This study was submitted manually, not through clinicaltrials.gov</em>
+<br/>
+<em style="font-size:0.7rem;">This study was submitted manually, not through clinicaltrials.gov</em>
 </div>
 <p><br/></p>
 <div id="manual6-modal" class="modalDialog">
@@ -8689,7 +8873,11 @@ Country: United States
 <div class="cities">
 City: Portland, OR
 </div>
-<br/> <a href="data/flyers/steel2022.jpeg" target="_blank"> <img src="data/flyers/steel2022.jpeg" class="flyer"/> </a> <b>Contact Information:</b>
+<br/>
+<a href="data/flyers/steel2022.jpeg" target="_blank">
+<img src="data/flyers/steel2022.jpeg" class="flyer"/>
+</a>
+<b>Contact Information:</b>
 <div class="contact">
 <table>
 <tbody>
@@ -8723,7 +8911,8 @@ Email:
 <div>
 
 </div>
-<br/> <em style="font-size:0.7rem;">This study was submitted manually, not through clinicaltrials.gov</em>
+<br/>
+<em style="font-size:0.7rem;">This study was submitted manually, not through clinicaltrials.gov</em>
 </div>
 </div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
