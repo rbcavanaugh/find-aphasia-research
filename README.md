@@ -14,6 +14,6 @@ If you notice an error on the website, please [contact me](https://robcavanaugh.
 Please contact me if you would like to add the following information to your study:
 
 - Whether or not your study can be completed remotely or long-distance travel costs are reimbursed
-- A youtube link to an aphasia-friendly recruiting video to your study's information card (IRB-approved if required).
+- A youtube link to an aphasia-friendly recruiting video to your study's information card (IRB-approved if required). 
 
 
