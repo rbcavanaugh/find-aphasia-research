@@ -1,7 +1,7 @@
 
 # find-aphasia-research
 
-Repository for [aphasiaresearch.org](aphasiaresearch.org). 
+Repository for [aphasiaresearch.org](aphasiaresearch.org).
 
 This website was built primarily using data from the [*clinicaltrials.gov*](https://clinicaltrials.gov/) API to identify studies that included a keyword or condition listing of Aphasia (excluding primary progressive aphasia and other dementias.) 
 
