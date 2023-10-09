@@ -568,9 +568,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     display: none !important;
   }
 
+  hr.section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 0px;
+  }
+
+
+  d-byline {
+    border-top: none;
+  }
+
   d-article {
     padding-top: 2.5rem;
     padding-bottom: 30px;
+    border-top: none;
   }
 
   d-appendix {
@@ -665,6 +677,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-article div.sourceCode pre {
     padding-left: 18px;
     font-size: 14px;
+  }
+
+  /* tweak for Pandoc numbered line within distill */
+  d-article pre.numberSource code > span {
+      left: -2em;
   }
 
   d-article pre {
@@ -1426,6 +1443,12 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // create d-title
     $('.d-title').changeElementType('d-title');
 
+    // separator
+    var separator = '<hr class="section-separator" style="clear: both"/>';
+    // prepend separator above appendix
+    $('.d-byline').before(separator);
+    $('.d-article').before(separator);
+
     // create d-byline
     var byline = $('<d-byline></d-byline>');
     $('.d-byline').replaceWith(byline);
@@ -1503,8 +1526,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     $('.distill-force-highlighting-css').parent().remove();
 
     // remove empty line numbers inserted by pandoc when using a
-    // custom syntax highlighting theme
-    $('code.sourceCode a:empty').remove();
+    // custom syntax highlighting theme, except when numbering line
+    // in code chunk
+    $('pre:not(.numberLines) code.sourceCode a:empty').remove();
 
     // load distill framework
     load_distill_framework();
@@ -1530,12 +1554,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
       // add orcid ids
       $('.authors-affiliations').find('.author').each(function(i, el) {
         var orcid_id = front_matter.authors[i].orcidID;
+        var author_name = front_matter.authors[i].author
         if (orcid_id) {
           var a = $('<a></a>');
           a.attr('href', 'https://orcid.org/' + orcid_id);
           var img = $('<img></img>');
           img.addClass('orcid-id');
-          img.attr('alt', 'ORCID ID');
+          img.attr('alt', author_name ? 'ORCID ID for ' + author_name : 'ORCID ID');
           img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
           a.append(img);
           $(this).append(a);
@@ -2336,6 +2361,7 @@ Maps
 
 <div class="d-title">
 <h1>Aphasia research studies</h1>
+
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 
@@ -2903,115 +2929,13 @@ Email:
 </div>
 </div>
 <p><br/></p>
-<div id="NCT04984239-modal" class="modalDialog">
-      <div>
-<a href="#NCT04984239" title="Close" class="close material-icons">&#xe5c9</a>
-<h3> Copy these email(s) into your email:</h3>
-<p>ANK155@pitt.edu</p>
-<h3>Copy this email template into your email:</h3>
-<div id="emailID5">
-Dear Alyssa Kelly,<br><br>
-I found your research on aphasiaresearch.org. <br>
-I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
-The best way to contact me is:<br>
-&nbsp;&nbsp;Caregiver: <b>[Insert your phone / email]</b><br>
-&nbsp;&nbsp;Person with aphasia: <b>[Insert your phone / email]</b><br>
-Thank you for doing this research.<br><br>
-Sincerely,<br>
-<b>[Insert your name]</b><br><br>
-</div>
-
-<div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID5') class = "copy-button">Copy Email Template</button>
-</div></div>
-</div>
-<div id="NCT04984239" class="study">
-<h3 class="name">
-Adapting Acceptance and Commitment Therapy for Stroke Survivors With Aphasia
-</h3>
-<div class="pi">
-Principle Investigator: William Evans
-</div>
-<div class="university">
-Institution: University of Pittsburgh
-</div>
-<div class="countries">
-Country: United States
-</div>
-<div class="cities">
-City: Pittsburgh, Pennsylvania
-</div>
-<br/>
-<b>Brief Description:</b>
-<div class="summary">
-<p>The proposed study is a Stage I successive cohort trial intended to adapt Acceptance and Commitment Therapy (ACT) to meet the specific needs of stroke survivors with aphasia (“ACT for Aphasia”). It will do so by incorporating communication supports and compensatory speech-language treatment. The goal of developing this integrated treatment is to improve successful communication participation, psychosocial adjustment, and quality of life for stroke survivors with aphasia.</p>
-In the first phase of the project, the investigators will create a treatment manual with input from a stakeholder advisory board consisting of caregivers and stroke survivors with aphasia. The investigators will then recruit an initial cohort of five stroke survivors with aphasia to undergo the initial version of the treatment based and provide feedback. This will aid revision of the manual, which the investigators will then evaluate using a second cohort of 16 stroke survivors with aphasia. The investigators predict that ACT for Aphasia will be acceptable and feasible based on measures of participant satisfaction and treatment adherence. The investigators will also measure pre- to post-treatment changes in psychological distress, functional disability, quality of life, and communication participation and functioning to establish preliminary effect size estimates for this intervention, in preparation for a subsequent Stage II efficacy trial.
-</div>
-<br/>
-<b>Inclusion Criteria:</b>
-<div>
-<li>
-Participants will be age 18 or older.
-<li>
-Participants will have an existing diagnosis of aphasia subsequent to left hemisphere stroke.<br>
-</div>
-<b>Exlcusion Criteria:</b>
-<div>
-<li>
-Participants with a history of other acquired or progressive neurological disease.
-<li>
-Participants whose mean modality t-score falls below 40 on the spoken language comprehension subdomain of the Comprehensive Aphasia Test.
-<li>
-Participants with semantic memory impairments as determined by the cutoff of the semantic memory component of the Comprehensive Aphasia Test.
-<li>
-Participants with unmanaged drug /alcohol dependence.
-<li>
-Participants with severe diagnose.d mood or behavioral disorders that require specialized mental health interventions
-</div>
-<br/>
-<b>Contact Information:</b>
-<div class="contact">
-<table>
-<tbody>
-<tr groupLength="2">
-<td colspan="2" style="border-bottom: 1px solid;">
-Alyssa Kelly, MA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Phone:
-</td>
-<td style="text-align:left;">
-412-383-6943
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Email:
-</td>
-<td style="text-align:left;">
-<a href="mailto:ANK155@pitt.edu" class="email">ANK155@pitt.edu</a>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div style="text-align:center;margin-bottom:5px;">
-<a href="#NCT04984239-modal" class="help-me">Help me write an email</a>
-</div>
-<div>
-
-</div>
-</div>
-<p><br/></p>
 <div id="NCT03635554-modal" class="modalDialog">
       <div>
 <a href="#NCT03635554" title="Close" class="close material-icons">&#xe5c9</a>
 <h3> Copy these email(s) into your email:</h3>
 <p>nmartin@temple.edu, wendy.greenspan@temple.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID6">
+<div id="emailID5">
 Dear Nadine Martin and Wendy Greenspan,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -3024,7 +2948,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID6') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID5') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT03635554" class="study">
@@ -3131,7 +3055,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>ruiqipanedu@163.com</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID7">
+<div id="emailID6">
 Dear Ruiqi Pan,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -3144,7 +3068,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID7') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID6') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05969548" class="study">
@@ -3262,7 +3186,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>svallilarohter@mghihp.edu, mlnicholas@mghihp.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID8">
+<div id="emailID7">
 Dear Sofia Vallila Rohter and Marjorie Nicholas,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -3275,7 +3199,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID8') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID7') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05307796" class="study">
@@ -3389,7 +3313,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>cute@musc.edu, krajeck@musc.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID9">
+<div id="emailID8">
 Dear Stephanie Cute and Kelly Krajeck,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -3402,7 +3326,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID9') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID8') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04364854" class="study">
@@ -3536,7 +3460,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>jianting.huang@pku.edu.cn, ruiqipanedu@163.com</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID10">
+<div id="emailID9">
 Dear Jianting Huang and Ruiqi Pan,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -3549,7 +3473,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID10') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID9') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05907031" class="study">
@@ -3682,131 +3606,13 @@ Email:
 </div>
 </div>
 <p><br/></p>
-<div id="NCT04289493-modal" class="modalDialog">
-      <div>
-<a href="#NCT04289493" title="Close" class="close material-icons">&#xe5c9</a>
-<h3> Copy these email(s) into your email:</h3>
-<p>blanca.fuentes@salud.madrid.org, elena.decelis.ruiz@idipaz.es</p>
-<h3>Copy this email template into your email:</h3>
-<div id="emailID11">
-Dear Blanca Fuentes Gimeno and Elena de Celis Ruiz,<br><br>
-I found your research on aphasiaresearch.org. <br>
-I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
-The best way to contact me is:<br>
-&nbsp;&nbsp;Caregiver: <b>[Insert your phone / email]</b><br>
-&nbsp;&nbsp;Person with aphasia: <b>[Insert your phone / email]</b><br>
-Thank you for doing this research.<br><br>
-Sincerely,<br>
-<b>[Insert your name]</b><br><br>
-</div>
-
-<div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID11') class = "copy-button">Copy Email Template</button>
-</div></div>
-</div>
-<div id="NCT04289493" class="study">
-<h3 class="name">
-DUbbing Language-therapy CINEma-based in Aphasia Post-Stroke
-</h3>
-<div class="pi">
-Principle Investigator: NA
-</div>
-<div class="university">
-Institution: Instituto de Investigación Hospital Universitario La Paz
-</div>
-<div class="countries">
-Country: Spain
-</div>
-<div class="cities">
-City: Madrid
-</div>
-<br/>
-<b>Brief Description:</b>
-<div class="summary">
-The DULCINEA study aims to develop and validate a new therapy that integrates essential language characteristics and functional communication by dubbing scenes from television series that represent daily situations. It will be a randomized, crossed over, interventional pilot study recruiting 54 patients with poststroke nonfluent aphasia. Patients will be treated individually in 40-minute sessions twice a week for 8 weeks. In each session, a speech therapist and an actor will select the clips with muted words or sentences that have been detected as functionally meaningful for each patient. Outcomes will be assessed as significant differences in two aphasia tests.
-</div>
-<br/>
-<b>Inclusion Criteria:</b>
-<div>
-<li>
-nonfluent aphasia due to unilateral stroke in the left hemisphere without neuroimaging evidence of lesions in the right hemisphere.
-<li>
-the patient should have received a standard program of conventional speech therapy after stroke, remaining with aphasia with the following characteristics: severely restricted language, poor repetition (even for single words), not exceeding the 70th percentile in the Boston Diagnostic Aphasia Examination (BDAE) for repetition. Moderately preserved language comprehension: listening comprehension exceeding the 15th percentile of BDAE (average score obtained in three areas: word comprehension, commands and complex ideational material).
-<li>
-Signed informed consent.<br>
-</div>
-<b>Exlcusion Criteria:</b>
-<div>
-<li>
-Any clinical condition (short life expectancy, coexisting disease) or other characteristics that precluded appropriate follow-up.
-<li>
-Participation in any therapeutic trial evaluating poststroke recovery.
-</div>
-<br/>
-<b>Contact Information:</b>
-<div class="contact">
-<table>
-<tbody>
-<tr grouplength="2">
-<td colspan="2" style="border-bottom: 1px solid;">
-Blanca Fuentes Gimeno
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Phone:
-</td>
-<td style="text-align:left;">
-917277444
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Email:
-</td>
-<td style="text-align:left;">
-<a href="mailto:blanca.fuentes@salud.madrid.org" class="email">blanca.fuentes@salud.madrid.org</a>
-</td>
-</tr>
-<tr groupLength="2">
-<td colspan="2" style="border-bottom: 1px solid;">
-Elena de Celis Ruiz
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Phone:
-</td>
-<td style="text-align:left;">
-917277444
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Email:
-</td>
-<td style="text-align:left;">
-<a href="mailto:elena.decelis.ruiz@idipaz.es" class="email">elena.decelis.ruiz@idipaz.es</a>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div style="text-align:center;margin-bottom:5px;">
-<a href="#NCT04289493-modal" class="help-me">Help me write an email</a>
-</div>
-<div>
-
-</div>
-</div>
-<p><br/></p>
 <div id="NCT05606393-modal" class="modalDialog">
       <div>
 <a href="#NCT05606393" title="Close" class="close material-icons">&#xe5c9</a>
 <h3> Copy these email(s) into your email:</h3>
 <p>pytsai@vghtpe.gov.tw</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID12">
+<div id="emailID10">
 Dear Po-Yi Tsai,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -3819,7 +3625,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID12') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID10') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05606393" class="study">
@@ -3917,7 +3723,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>tbulut@medipol.edu.tr, tbulut@medipol.edu.tr</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID13">
+<div id="emailID11">
 Dear Talat Bulut and MEDKOM,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -3930,7 +3736,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID13') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID11') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05450341" class="study">
@@ -4058,7 +3864,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>kpolanowska@ipin.edu.pl, iwanski@ipin.edu.pl</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID14">
+<div id="emailID12">
 Dear Katarzyna E Polanowska and Szczepan Iwański,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -4071,7 +3877,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID14') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID12') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05303649" class="study">
@@ -4194,7 +4000,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>olsonac@bham.ac.uk</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID15">
+<div id="emailID13">
 Dear Andrew Olson,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -4207,7 +4013,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID15') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID13') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT02458222" class="study">
@@ -4285,7 +4091,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>lee1704@purdue.edu, lee1704@purdue.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID16">
+<div id="emailID14">
 Dear Jiyeon Lee and Jiyeon Lee,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -4298,7 +4104,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID16') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID14') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05415501" class="study">
@@ -4413,7 +4219,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>claudia.repetto@unicatt.it, alice.cancer@unicatt.it</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID17">
+<div id="emailID15">
 Dear Claudia Repetto and Alice Cancer,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -4426,7 +4232,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID17') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID15') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05793879" class="study">
@@ -4537,7 +4343,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>r-behroozmand@sc.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID18">
+<div id="emailID16">
 Dear Roozbeh Behroozmand,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -4550,7 +4356,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID18') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID16') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04742894" class="study">
@@ -4628,7 +4434,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>e.meier@northeastern.edu, s.intille@northeastern.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID19">
+<div id="emailID17">
 Dear Erin L Meier and Stephen Intille,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -4641,7 +4447,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID19') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID17') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05338216" class="study">
@@ -4748,7 +4554,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>mary.sullivan@va.gov, alyssa.autenreith@va.gov</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID20">
+<div id="emailID18">
 Dear Mary Sullivan and Alyssa Autenreith,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -4761,7 +4567,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID20') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID18') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04215952" class="study">
@@ -4880,7 +4686,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>ruiqipanedu@163.com</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID21">
+<div id="emailID19">
 Dear Ruiqi Pan,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -4893,7 +4699,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID21') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID19') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05957354" class="study">
@@ -5011,7 +4817,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>jianting.huang@pku.edu.cn, ruiqipanedu@163.com</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID22">
+<div id="emailID20">
 Dear Jianting Huang and Ruiqi Pan,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -5024,7 +4830,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID22') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID20') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05957445" class="study">
@@ -5163,7 +4969,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>nmartin@temple.edu, reillyj@temple.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID23">
+<div id="emailID21">
 Dear Nadine Martin and Jamie Reilly,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -5176,7 +4982,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID23') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID21') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT02664506" class="study">
@@ -5311,7 +5117,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>samuel.cason@pennmedicine.upenn.edu, hbc@pennmedicine.upenn.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID24">
+<div id="emailID22">
 Dear Samuel Cason and Principal Investigator,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -5324,7 +5130,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID24') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID22') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT03651700" class="study">
@@ -5437,7 +5243,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>danet.l@chu-toulouse.fr, delrutte.s@chu-toulouse.fr</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID25">
+<div id="emailID23">
 Dear Lola Danet and Stéphanie Delrutte,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -5450,7 +5256,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID25') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID23') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT03287544" class="study">
@@ -5571,7 +5377,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>njpaik@snu.ac.kr, bluebelll@naver.com</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID26">
+<div id="emailID24">
 Dear Nam-Jong Paik and Ji-Young Lee,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -5584,7 +5390,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID26') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID24') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT02591719" class="study">
@@ -5709,7 +5515,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>aidan.rogers@mountsinai.org, Courtney.McSweeney@mountsinai.org</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID27">
+<div id="emailID25">
 Dear Aidan Rogers and Courtney McSweeney,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -5722,7 +5528,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID27') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID25') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05194566" class="study">
@@ -5855,7 +5661,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>jdrichardson@unm.edu, hhubbard@unm.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID28">
+<div id="emailID26">
 Dear Jessica Richardson and Honey Hubbard,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -5868,7 +5674,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID28') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID26') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04432883" class="study">
@@ -5987,7 +5793,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>julio.hpavon@northwestern.edu, lkinsey@sralab.org</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID29">
+<div id="emailID27">
 Dear Julio Hernandez Pavon and Laura Kinsey,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -6000,7 +5806,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID29') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID27') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05660304" class="study">
@@ -6137,7 +5943,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>aphasialab@osu.edu, harnish.18@osu.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID30">
+<div id="emailID28">
 Dear Victoria Diedrichs and Stacy M Harnish,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -6150,7 +5956,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID30') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID28') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05179538" class="study">
@@ -6265,7 +6071,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>blackett@musc.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID31">
+<div id="emailID29">
 Dear Principal Investigator,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -6278,7 +6084,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID31') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID29') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05851573" class="study">
@@ -6374,7 +6180,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>ays41@pitt.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID32">
+<div id="emailID30">
 Dear Aysha Salter-Volz,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -6387,7 +6193,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID32') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID30') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05653466" class="study">
@@ -6476,7 +6282,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>lkinsey@sralab.org</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID33">
+<div id="emailID31">
 Dear Laura Kinsey,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -6489,7 +6295,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID33') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID31') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04138940" class="study">
@@ -6587,7 +6393,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>wangkai1964@126.com, baiyunong1990@163.com</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID34">
+<div id="emailID32">
 Dear Kai Wang and Tongjian Bai,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -6600,7 +6406,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID34') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID32') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05502822" class="study">
@@ -6715,7 +6521,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>ays41@pitt.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID35">
+<div id="emailID33">
 Dear Aysha Salter-Volz,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -6728,7 +6534,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID35') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID33') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05653440" class="study">
@@ -6815,7 +6621,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>earil100@syr.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID36">
+<div id="emailID34">
 Dear Ellyn A Riley,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -6828,7 +6634,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID36') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID34') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04963803" class="study">
@@ -6962,7 +6768,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>Elena.Zevgolatakou@mrc-cbu.cam.ac.uk, Ajay.Halai@mrc-cbu.cam.ac.uk</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID37">
+<div id="emailID35">
 Dear Eleni Zevgolatakou and Ajay Halai,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -6975,7 +6781,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID37') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID35') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05512884" class="study">
@@ -7106,7 +6912,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>lcherney@sralab.org, sameer.ashaie@northwestern.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID38">
+<div id="emailID36">
 Dear Leora Cherney and Sameer Ashaie,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -7119,7 +6925,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID38') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID36') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT03773406" class="study">
@@ -7238,7 +7044,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>shauna.zodrow@jefferson.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID39">
+<div id="emailID37">
 Dear Shauna Zodrow,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -7251,7 +7057,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID39') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID37') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05687994" class="study">
@@ -7341,7 +7147,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>claudio.brozzoli@inserm.fr, mallory.augier@gmail.com</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID40">
+<div id="emailID38">
 Dear Claudio BROZZOLI and Mallory AUGIER,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -7354,7 +7160,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID40') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID38') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05776368" class="study">
@@ -7495,7 +7301,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>argye@jhmi.edu, md.stockbridge@jhmi.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID41">
+<div id="emailID39">
 Dear Argye Hillis-Trupe and Melissa D Stockbridge,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -7508,7 +7314,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID41') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID39') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT03843463" class="study">
@@ -7639,7 +7445,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>sschoenrock@mcw.edu, sapillay@mcw.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID42">
+<div id="emailID40">
 Dear Sidney E Schoenrock and Sara Pillay,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -7652,7 +7458,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID42') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID40') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT06010030" class="study">
@@ -7773,7 +7579,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>agnes.floeel@uni-greifswald.de, nina.unger@uni-greifswald.de</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID43">
+<div id="emailID41">
 Dear Agnes Floeel and Nina Unger,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -7786,7 +7592,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID43') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID41') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT03930121" class="study">
@@ -7921,7 +7727,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>lzipse@mghihp.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID44">
+<div id="emailID42">
 Dear Lauryn Zipse,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -7934,7 +7740,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID44') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID42') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05248295" class="study">
@@ -8022,7 +7828,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>ruiqipanedu@163.com</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID45">
+<div id="emailID43">
 Dear Ruiqi Pan,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -8035,7 +7841,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID45') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID43') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05842304" class="study">
@@ -8153,7 +7959,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>DRMoser@uams.edu, PSCarr@uams.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID46">
+<div id="emailID44">
 Dear Dana Moser and Portia Carr,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -8166,7 +7972,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID46') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID44') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT03929432" class="study">
@@ -8285,7 +8091,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>sdrane@mcw.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID47">
+<div id="emailID45">
 Dear Samantha Drane,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -8298,7 +8104,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID47') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID45') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04375722" class="study">
@@ -8408,7 +8214,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>marion.fossard@unine.ch, celia.ericson@unine.ch</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID48">
+<div id="emailID46">
 Dear Marion Fossard and Célia Ericson,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -8421,7 +8227,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID48') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID46') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05656638" class="study">
@@ -8537,7 +8343,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>claire.honeycutt@asu.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID49">
+<div id="emailID47">
 Dear Claire F Honeycutt,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -8550,7 +8356,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID49') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID47') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04816799" class="study">
@@ -8642,7 +8448,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>min.wong@polyu.edu.hk, faisal.n.baig@polyu.edu.hk</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID50">
+<div id="emailID48">
 Dear Min Ney WONG and Faisal N Baig,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -8655,7 +8461,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID50') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID48') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05483556" class="study">
@@ -8778,7 +8584,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>charlotta.saldert@neuro.gu.se, francesca.longoni@neuro.gu.se</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID51">
+<div id="emailID49">
 Dear Charlotta Saldert and Francesca Longoni,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -8791,7 +8597,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID51') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID49') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05152979" class="study">
@@ -8904,7 +8710,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>tmontagnon@chu-grenoble.fr</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID52">
+<div id="emailID50">
 Dear University Hospital,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -8917,7 +8723,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID52') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID50') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04433351" class="study">
@@ -9001,7 +8807,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>sschoenrock@mcw.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID53">
+<div id="emailID51">
 Dear Sidney Schoenrock,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -9014,7 +8820,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID53') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID51') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04166513" class="study">
@@ -9102,7 +8908,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>amy.rodriguez@va.gov, Laura.Britan_Lang@va.gov</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID54">
+<div id="emailID52">
 Dear Amy D Rodriguez and Laura Britan Lang,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -9115,7 +8921,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID54') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID52') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04267198" class="study">
@@ -9230,7 +9036,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>joanne.loewy@mountsinai.org</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID55">
+<div id="emailID53">
 Dear Joanne Loewy,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -9243,7 +9049,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID55') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID53') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT02328573" class="study">
@@ -9321,7 +9127,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>sschoenrock@mcw.edu, prishah@mcw.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID56">
+<div id="emailID54">
 Dear Sidney E Schoenrock and Priyanka Shah-Basak,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -9334,7 +9140,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID56') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID54') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT06048159" class="study">
@@ -9451,7 +9257,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>al1579@georgetown.edu, ehl4@georgetown.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID57">
+<div id="emailID55">
 Dear Alycia Laks and Elizabeth Lacey,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -9464,7 +9270,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID57') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID55') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04991519" class="study">
@@ -9583,7 +9389,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>argye@jhmi.edu, md.stockbridge@jhmi.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID58">
+<div id="emailID56">
 Dear Argye E Hillis and Melissa D Stockbridge,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -9596,7 +9402,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID58') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID56') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05845047" class="study">
@@ -9709,7 +9515,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>Adrian.Guggisberg@insel.ch</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID59">
+<div id="emailID57">
 Dear Adrian G Guggisberg,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -9722,7 +9528,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID59') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID57') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05570578" class="study">
@@ -9821,7 +9627,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>amy.rodriguez@va.gov, Laura.Britan_Lang@va.gov</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID60">
+<div id="emailID58">
 Dear Amy D Rodriguez and Laura Britan Lang,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -9834,7 +9640,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID60') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID58') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04387162" class="study">
@@ -9945,7 +9751,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>gfz2102@cumc.columbia.edu, eg2972@cumc.columbia.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID61">
+<div id="emailID59">
 Dear Galen Ziaggi and Elena M. Golub,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -9958,7 +9764,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID61') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID59') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT04576793" class="study">
@@ -10085,7 +9891,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>simona.spaccavento@icsmaugeri.it</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID62">
+<div id="emailID60">
 Dear Simona Spaccavento,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -10098,7 +9904,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID62') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID60') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="NCT05706831" class="study">
@@ -10196,7 +10002,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>aphasiaresearchlaboratory@gmail.com</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID63">
+<div id="emailID61">
 Dear Swathi Kiran,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -10209,7 +10015,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID63') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID61') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="manual1" class="study">
@@ -10276,7 +10082,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>bcstark@iu.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID64">
+<div id="emailID62">
 Dear Brielle C. Stark,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -10289,7 +10095,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID64') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID62') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="manual2" class="study">
@@ -10356,7 +10162,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>bcstark@iu.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID65">
+<div id="emailID63">
 Dear Brielle C. Stark,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -10369,7 +10175,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID65') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID63') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="manual3" class="study">
@@ -10436,7 +10242,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>tbrancamp@med.unr.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID66">
+<div id="emailID64">
 Dear Tami Brancamp,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -10449,7 +10255,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID66') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID64') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="manual4" class="study">
@@ -10516,7 +10322,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>rharrington2@gsu.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID67">
+<div id="emailID65">
 Dear Rachael Harrington,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -10529,7 +10335,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID67') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID65') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="manual5" class="study">
@@ -10596,7 +10402,7 @@ Email:
 <h3> Copy these email(s) into your email:</h3>
 <p>aphasialab@pdx.edu</p>
 <h3>Copy this email template into your email:</h3>
-<div id="emailID68">
+<div id="emailID66">
 Dear Stacey Steel,<br><br>
 I found your research on aphasiaresearch.org. <br>
 I have aphasia and I'm interested in learning more about the study. I think I may meet the study criteria. <br>
@@ -10609,7 +10415,7 @@ Sincerely,<br>
 </div>
 
 <div style="text-align:center;">
-<button onclick=copyDivToClipboard('emailID68') class = "copy-button">Copy Email Template</button>
+<button onclick=copyDivToClipboard('emailID66') class = "copy-button">Copy Email Template</button>
 </div></div>
 </div>
 <div id="manual6" class="study">
